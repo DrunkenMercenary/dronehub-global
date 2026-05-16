@@ -1,0 +1,7 @@
+﻿\
+
+> db@1.0.0 generate
+> prisma generate
+
+Environment variables loaded from .env
+Prisma schema loaded from prisma\schema.prisma

@@ -1,0 +1,14 @@
+{
+    "private": true,
+    "workspaces": [
+        "apps/*",
+        "packages/*"
+    ],
+    "scripts": {
+        "dev": "npm run dev --workspace=apps/web",
+        "build": "npm run build --workspace=apps/web",
+        "generate": "npm run generate --workspace=packages/db",
+        "db:push": "npm run db:push --workspace=packages/db",
+        "postinstall": "npm run generate"
+    }
+}
