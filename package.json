@@ -8,10 +8,11 @@
         "packages/*"
     ],
     "scripts": {
-        "dev": "npm run dev --workspace=apps/web",
-        "build": "npm run build --workspace=apps/web",
-        "generate": "npm run generate --workspace=packages/db",
-        "db:push": "npm run db:push --workspace=packages/db",
+        "start": "npm run start --workspace=web",
+        "dev": "npm run dev --workspace=web",
+        "build": "npm run build --workspace=web",
+        "generate": "npm run generate --workspace=db",
+        "db:push": "npm run db:push --workspace=db",
         "postinstall": "npm run generate"
     }
 }
