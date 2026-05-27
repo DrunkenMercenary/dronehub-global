@@ -1,0 +1,13 @@
+node_modules
+.next
+.git
+.env
+.env.local
+.env.*.local
+*.log
+build_error.txt
+build_log*.txt
+.tmp
+directives
+execution
+docker-compose.yml
