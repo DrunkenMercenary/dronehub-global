@@ -74,7 +74,11 @@ export async function verifyCredentials(email: string, password: string) {
             return null
         }
 
-        // Verify password
+        // Verify password - user.password can be null for OAuth users
+        if (!user.password) {
+            return null
+        }
+
         const isValidPassword = await bcrypt.compare(password, user.password)
 
         if (!isValidPassword) {
