@@ -64,7 +64,7 @@ async function main() {
                     name: "Alpha Flight",
                     description: "High-end cinematic and structural specialists.",
                     status: "APPROVED",
-                    services: "Cinematography,Mapping,Inspection",
+                    services: "videography,surveying,inspection",
                     radius: 100,
                     lat: 40.7128,
                     lng: -74.0060
@@ -86,7 +86,7 @@ async function main() {
                     name: "GeoPulse Aerial",
                     description: "Precision mapping and LiDAR surveys.",
                     status: "APPROVED",
-                    services: "Mapping,Surveying",
+                    services: "surveying,inspection",
                     radius: 250,
                     lat: 34.0522,
                     lng: -118.2437
@@ -108,7 +108,7 @@ async function main() {
                     name: "Fresh Skies",
                     description: "Entry-level pilot looking for real estate experience.",
                     status: "PENDING",
-                    services: "Real Estate",
+                    services: "photography",
                     radius: 50,
                     lat: 25.7617,
                     lng: -80.1918
@@ -124,7 +124,7 @@ async function main() {
         data: {
             title: "Solar Farm Inspection",
             description: "Thermal scan of 500 panels to identify hotspots and micro-cracks.",
-            category: "Inspection",
+            category: "inspection",
             location: "Phoenix, AZ",
             clientId: client2.clientProfile!.id,
             status: "OPEN"
@@ -135,7 +135,7 @@ async function main() {
         data: {
             title: "Hollywood Hills Luxury Promo",
             description: "FPV Flythrough and cinematic exteriors for a $15M listing.",
-            category: "Cinematography",
+            category: "videography",
             location: "Los Angeles, CA",
             clientId: client1.clientProfile!.id,
             status: "AWARDED"

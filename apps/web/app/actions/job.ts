@@ -4,6 +4,7 @@ import { z } from "zod"
 import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
+import { normaliseCategory, parseServices } from "@/lib/categories"
 
 // Schema for Job Creation
 const jobSchema = z.object({
@@ -41,7 +42,7 @@ export async function createJob(data: JobFormData, userEmail: string) {
                 clientId: user.clientProfile.id,
                 title,
                 description,
-                category,
+                category: normaliseCategory(category),
                 location,
             }
         })
@@ -68,16 +69,18 @@ export async function getOperatorFeed(operatorEmail: string) {
             return []
         }
 
-        const services = user.operatorProfile.services.split(',')
+        // Only approved operators get a job feed (directive: approved operators
+        // can see jobs and submit proposals).
+        if (user.operatorProfile.status !== "APPROVED") {
+            return []
+        }
+
+        const services = parseServices(user.operatorProfile.services)
 
         const jobs = await prisma.jobRequest.findMany({
             where: {
                 status: "OPEN",
-                ...(services.length > 0 ? {
-                    category: {
-                        in: services
-                    }
-                } : {}),
+                ...(services.length > 0 ? { category: { in: services } } : {}),
             },
             orderBy: {
                 createdAt: 'desc'
@@ -137,6 +140,10 @@ export async function submitProposal(jobId: string, price: number, message: stri
 
         if (!user || !user.operatorProfile) {
             return { error: "Operator profile not found" }
+        }
+
+        if (user.operatorProfile.status !== "APPROVED") {
+            return { error: "Your operator profile must be approved before submitting proposals" }
         }
 
         // Check if already applied

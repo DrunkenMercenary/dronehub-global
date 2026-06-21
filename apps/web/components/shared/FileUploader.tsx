@@ -27,15 +27,21 @@ export function FileUploader({ onUpload, label, acceptedTypes }: FileUploaderPro
 
         setUploading(true)
         try {
-            // In a real app, we'd use a server action or API route to get a presigned URL
-            // and then upload directly to S3. For this MVP, we'll simulate.
-            console.log("Uploading file:", file.name)
+            const formData = new FormData()
+            formData.append("file", file)
 
-            // Artificial delay
-            await new Promise(r => setTimeout(r, 1500))
+            const res = await fetch("/api/upload", {
+                method: "POST",
+                body: formData,
+            })
 
-            const mockUrl = `https://demo-storage.dronehub.global/${file.name}`
-            await onUpload(mockUrl, file.name)
+            if (!res.ok) {
+                const body = await res.json().catch(() => ({}))
+                throw new Error(body.error || "Upload failed")
+            }
+
+            const data = await res.json()
+            await onUpload(data.url, data.name || file.name)
 
             setStatus("success")
             setFile(null)

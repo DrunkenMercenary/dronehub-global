@@ -26,6 +26,19 @@ export async function createProposal(data: z.infer<typeof proposalSchema>) {
             return { error: "Job is no longer open for proposals" }
         }
 
+        // Only approved operators may submit proposals.
+        const operator = await prisma.operatorProfile.findUnique({
+            where: { id: validated.operatorId }
+        })
+
+        if (!operator) {
+            return { error: "Operator profile not found" }
+        }
+
+        if (operator.status !== "APPROVED") {
+            return { error: "Your operator profile must be approved before submitting proposals" }
+        }
+
         // Check if operator already applied
         const existing = await prisma.proposal.findFirst({
             where: {

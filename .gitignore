@@ -39,3 +39,18 @@ next-env.d.ts
 # prisma
 /packages/db/node_modules/
 /packages/db/.env
+
+# local uploaded files (use S3/R2 in production)
+/apps/web/uploads/
+uploads/
+
+# sqlite leftovers (project uses Postgres)
+*.db
+packages/db/prisma/dev.db
+
+# stray build/test logs
+build_*.txt
+build_output.txt
+test_output*.txt
+tsc_error.log
+prisma_*.txt
