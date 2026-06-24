@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
+import { notify } from "@/lib/notify"
 
 const proposalSchema = z.object({
     jobId: z.string(),
@@ -59,6 +60,17 @@ export async function createProposal(data: z.infer<typeof proposalSchema>) {
                 message: validated.coverLetter,
                 status: "PENDING"
             }
+        })
+
+        const jobOwner = await prisma.jobRequest.findUnique({
+            where: { id: validated.jobId },
+            include: { client: { select: { userId: true, name: true } } },
+        })
+        await notify(jobOwner?.client.userId, {
+            type: "proposal",
+            title: "New proposal received",
+            body: `${operator.name} sent a proposal on "${job.title}"`,
+            link: `/jobs/${validated.jobId}`,
         })
 
         revalidatePath(`/jobs/${validated.jobId}`)
@@ -118,6 +130,13 @@ export async function awardProposal(proposalId: string, clientEmail: string) {
                 data: { status: "REJECTED" }
             })
         ])
+
+        await notify(proposal.operator.userId, {
+            type: "award",
+            title: "Your proposal was accepted",
+            body: `You won the job "${proposal.job.title}"`,
+            link: `/jobs/${proposal.jobId}`,
+        })
 
         revalidatePath(`/jobs/${proposal.jobId}`)
         revalidatePath("/client/dashboard")

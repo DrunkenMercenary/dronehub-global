@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
+import { notify } from "@/lib/notify"
 
 export async function getAdminStats() {
     try {
@@ -37,9 +38,8 @@ export async function getPendingOperators() {
         const operators = await prisma.operatorProfile.findMany({
             where: { status: "PENDING" },
             include: {
-                user: {
-                    select: { email: true }
-                }
+                user: { select: { email: true } },
+                documents: true,
             },
             orderBy: { id: 'desc' }
         })
@@ -56,6 +56,14 @@ export async function updateOperatorStatus(operatorId: string, status: "APPROVED
         const updated = await prisma.operatorProfile.update({
             where: { id: operatorId },
             data: { status }
+        })
+        await notify(updated.userId, {
+            type: "approval",
+            title: status === "APPROVED" ? "You're verified" : "Profile not approved",
+            body: status === "APPROVED"
+                ? "Your operator profile was approved. You now appear in the directory."
+                : "Your operator profile was not approved. Please review your documents.",
+            link: "/dashboard",
         })
         revalidatePath("/admin/operators")
         return { success: true, operator: updated }

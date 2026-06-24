@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
+import { notify } from "@/lib/notify"
 
 export async function getOrCreateThread(jobId: string, clientId: string, operatorProfileId: string) {
     try {
@@ -40,12 +41,20 @@ export async function sendMessage(threadId: string, senderId: string, content: s
             }
         })
 
-        // Revalidate relevant pages
+        // Revalidate relevant pages + notify the other participant
         const thread = await prisma.thread.findUnique({
-            where: { id: threadId }
+            where: { id: threadId },
+            include: { client: { select: { userId: true } }, operator: { select: { userId: true } }, job: { select: { title: true } } },
         })
         if (thread) {
             revalidatePath(`/jobs/${thread.jobId}`)
+            const recipient = thread.client.userId === senderId ? thread.operator.userId : thread.client.userId
+            await notify(recipient, {
+                type: "message",
+                title: "New message",
+                body: `New message about "${thread.job.title}"`,
+                link: `/jobs/${thread.jobId}`,
+            })
         }
 
         return { success: true, message }

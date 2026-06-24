@@ -31,7 +31,7 @@ export function ProposalCard({ proposal, onAward, isAwarding, canAward = true }:
             case "REJECTED":
                 return "bg-red-500/20 text-red-400 border-red-500/30"
             default:
-                return "bg-[#17ad96]/20 text-[#17ad96] border-[#17ad96]/30"
+                return "bg-amber-500/20 text-amber-400 border-amber-500/30"
         }
     }
 
@@ -45,20 +45,20 @@ export function ProposalCard({ proposal, onAward, isAwarding, canAward = true }:
     }
 
     return (
-        <div className="group relative rounded-2xl bg-[#12171e] border border-white/5 hover:border-[#17ad96]/30 transition-all duration-300 overflow-hidden">
+        <div className="group relative rounded-2xl bg-[#18222e] border border-white/5 hover:border-[#FB7427]/30 transition-all duration-300 overflow-hidden">
             <div className="p-8 space-y-6">
                 <div className="flex items-start justify-between gap-4">
                     <div className="flex items-center gap-4">
-                        <div className="h-14 w-14 rounded-xl bg-black/40 border border-white/5 flex items-center justify-center relative overflow-hidden group-hover:bg-[#17ad96]/10 transition-colors">
+                        <div className="h-14 w-14 rounded-xl bg-black/40 border border-white/5 flex items-center justify-center relative overflow-hidden group-hover:bg-[#FB7427]/10 transition-colors">
                             <span className="text-xl font-black text-white italic tracking-tighter relative z-10">{getInitials(proposal.operator.name)}</span>
-                            <div className="absolute inset-0 bg-gradient-to-br from-[#17ad96]/5 to-transparent"></div>
+                            <div className="absolute inset-0 bg-gradient-to-br from-[#FB7427]/5 to-transparent"></div>
                         </div>
                         <div className="space-y-1">
-                            <h3 className="text-xl font-black text-white group-hover:text-[#17ad96] transition-colors uppercase italic tracking-tighter">
+                            <h3 className="text-xl font-black text-white group-hover:text-[#FB7427] transition-colors uppercase italic tracking-tighter">
                                 {proposal.operator.name}
                             </h3>
                             <div className="flex items-center gap-2 text-[10px] text-gray-500 font-bold uppercase tracking-widest">
-                                <ShieldCheck className="w-3 h-3 text-[#17ad96]" /> Licensed Operator
+                                <ShieldCheck className="w-3 h-3 text-[#FB7427]" /> Licensed Operator
                             </div>
                         </div>
                     </div>
@@ -69,7 +69,7 @@ export function ProposalCard({ proposal, onAward, isAwarding, canAward = true }:
 
                 <div className="grid gap-6 md:grid-cols-2">
                     <div className="space-y-2">
-                        <p className="text-[10px] font-black text-gray-600 uppercase tracking-widest">Operational Fee</p>
+                        <p className="text-[10px] font-black text-gray-600 uppercase tracking-widest">Your price</p>
                         <p className="text-3xl font-black text-white tracking-tighter italic">
                             ${proposal.price.toLocaleString()} <span className="text-[12px] text-gray-500 not-italic uppercase tracking-widest ml-1 font-bold">USD</span>
                         </p>
@@ -77,14 +77,14 @@ export function ProposalCard({ proposal, onAward, isAwarding, canAward = true }:
                     <div className="space-y-2 md:text-right">
                         <p className="text-[10px] font-black text-gray-600 uppercase tracking-widest">Scheduled Transmission</p>
                         <div className="flex items-center md:justify-end gap-2 text-xs font-bold text-gray-400 capitalize">
-                            <Calendar className="w-3.5 h-3.5 text-[#17ad96]" /> {new Date(proposal.createdAt).toLocaleDateString()}
+                            <Calendar className="w-3.5 h-3.5 text-[#FB7427]" /> {new Date(proposal.createdAt).toLocaleDateString()}
                         </div>
                     </div>
                 </div>
 
                 <div className="p-6 rounded-xl bg-black/40 border border-white/5 space-y-4">
-                    <div className="flex items-center gap-2 text-[10px] font-black text-[#17ad96] uppercase tracking-[0.2em]">
-                        <Zap className="w-3 h-3" /> Mission Proposal
+                    <div className="flex items-center gap-2 text-[10px] font-black text-[#FB7427] uppercase tracking-[0.2em]">
+                        <Zap className="w-3 h-3" /> Proposal
                     </div>
                     <p className="text-sm text-gray-400 font-medium leading-relaxed italic">
                         "{proposal.message}"
@@ -95,7 +95,7 @@ export function ProposalCard({ proposal, onAward, isAwarding, canAward = true }:
                     <Button
                         onClick={() => onAward(proposal.id)}
                         disabled={isAwarding}
-                        className="w-full bg-[#17ad96] hover:bg-[#159a85] text-[#0a0d11] font-black uppercase tracking-tighter h-14 rounded-xl shadow-lg shadow-[#17ad96]/5 group transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+                        className="w-full bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-black uppercase tracking-tighter h-14 rounded-xl shadow-lg shadow-[#FB7427]/5 group transition-all active:scale-[0.98] flex items-center justify-center gap-2"
                     >
                         {isAwarding ? "Authorizing Award..." : (
                             <>
@@ -107,7 +107,7 @@ export function ProposalCard({ proposal, onAward, isAwarding, canAward = true }:
             </div>
 
             {/* Design Element */}
-            <div className="absolute bottom-0 right-0 w-24 h-24 bg-[#17ad96]/5 blur-3xl rounded-full translate-x-12 translate-y-12"></div>
+            <div className="absolute bottom-0 right-0 w-24 h-24 bg-[#FB7427]/5 blur-3xl rounded-full translate-x-12 translate-y-12"></div>
         </div>
     )
 }

@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import bcrypt from "bcryptjs"
+import { notifyAdmins } from "@/lib/notify"
 
 const operatorSchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters"),
@@ -93,6 +94,13 @@ export async function onboardOperator(data: OperatorFormData) {
                     }
                 }
             }
+        })
+
+        await notifyAdmins({
+            type: "operator_signup",
+            title: "New operator awaiting review",
+            body: `${name} signed up and needs approval`,
+            link: "/admin/operators",
         })
 
     } catch (error) {

@@ -23,17 +23,17 @@ export default async function BrowseJobsPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[#0a0d11] py-16 md:py-24">
+        <div className="min-h-screen bg-[#0f1722] py-16 md:py-24">
             <div className="container px-4 md:px-6">
                 {/* Header Section */}
                 <div className="max-w-4xl mb-16 space-y-6">
-                    <div className="inline-block px-3 py-1 rounded-full bg-[#17ad96]/10 border border-[#17ad96]/20">
-                        <span className="text-[#17ad96] text-[10px] font-bold tracking-[0.2em] uppercase">
+                    <div className="inline-block px-3 py-1 rounded-full bg-[#FB7427]/10 border border-[#FB7427]/20">
+                        <span className="text-[#FB7427] text-[10px] font-bold tracking-[0.2em] uppercase">
                             Available Opportunities
                         </span>
                     </div>
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight">
-                        Find Your Next <span className="text-[#17ad96]">Mission</span>
+                        Find Your Next <span className="text-[#FB7427]">Mission</span>
                     </h1>
                     <p className="text-gray-400 text-lg md:text-xl max-w-2xl leading-relaxed font-medium">
                         Browse through open projects and submit your best proposals to work with clients worldwide.
@@ -46,17 +46,17 @@ export default async function BrowseJobsPage() {
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-600" />
                         <Input
                             placeholder="Search by location, keyword or drone type..."
-                            className="w-full bg-[#12171e] border-white/5 h-14 pl-12 text-white placeholder:text-gray-600 focus:border-[#17ad96]/50 transition-all rounded-xl"
+                            className="w-full bg-[#18222e] border-white/5 h-14 pl-12 text-white placeholder:text-gray-600 focus:border-[#FB7427]/50 transition-all rounded-xl"
                         />
                     </div>
-                    <Button size="lg" variant="outline" className="h-14 border-white/5 bg-[#12171e] text-white font-bold px-8 rounded-xl hover:bg-[#17ad96]/10 hover:border-[#17ad96]/30">
+                    <Button size="lg" variant="outline" className="h-14 border-white/5 bg-[#18222e] text-white font-bold px-8 rounded-xl hover:bg-[#FB7427]/10 hover:border-[#FB7427]/30">
                         <SlidersHorizontal className="mr-2 w-5 h-5" /> Filters
                     </Button>
                 </div>
 
                 {/* Job Grid */}
                 {jobs.length === 0 ? (
-                    <div className="p-20 rounded-3xl border border-dashed border-white/10 bg-[#12171e]/50 text-center space-y-6">
+                    <div className="p-20 rounded-3xl border border-dashed border-white/10 bg-[#18222e]/50 text-center space-y-6">
                         <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mx-auto">
                             <Briefcase className="w-8 h-8 text-gray-800" />
                         </div>

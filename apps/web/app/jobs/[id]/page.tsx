@@ -20,6 +20,12 @@ import { getOrCreateThread, getMessages } from "@/app/actions/message"
 import { ChatThread } from "@/components/messaging/ChatThread"
 import { FileUploader } from "@/components/shared/FileUploader"
 import { addDocument } from "@/app/actions/document"
+import { CompleteJobButton } from "@/components/client/CompleteJobButton"
+import { ReviewForm } from "@/components/client/ReviewForm"
+import { StarRating } from "@/components/shared/StarRating"
+import { PayButton } from "@/components/client/PayButton"
+import { getJobPayment } from "@/app/actions/payment"
+import { isPaymentsEnabled } from "@/lib/stripe"
 
 export const dynamic = 'force-dynamic'
 
@@ -30,6 +36,7 @@ async function getJobData(id: string) {
             include: {
                 client: true,
                 documents: true,
+                review: { include: { client: { select: { name: true } } } },
                 proposals: {
                     include: {
                         operator: true
@@ -84,8 +91,11 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
     let thread = null
     let messages: any[] = []
     const awardedProposal = (job.proposals || []).find((p: any) => p.status === "ACCEPTED")
+    const payment = await getJobPayment(job.id)
+    const paymentsEnabled = isPaymentsEnabled()
     const isAwardedOperator = isOperator && operatorProfileId === awardedProposal?.operatorId
-    const canChat = (isClient && job.status === "AWARDED") || (isAwardedOperator && job.status === "AWARDED")
+    const isActive = job.status === "AWARDED" || job.status === "COMPLETED"
+    const canChat = (isClient && isActive) || (isAwardedOperator && isActive)
 
     if (canChat && awardedProposal) {
         thread = await getOrCreateThread(job.id, job.clientId, awardedProposal.operatorId)
@@ -95,19 +105,19 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
     }
 
     return (
-        <div className="min-h-screen bg-[#0a0d11] py-16 md:py-24">
+        <div className="min-h-screen bg-[#0f1722] py-16 md:py-24">
             <div className="container px-4 md:px-6">
 
-                {/* Mission Header */}
+                {/* Job header */}
                 <div className="flex flex-col md:flex-row justify-between items-start gap-8 mb-12">
                     <div className="space-y-4">
                         <div className="flex items-center gap-3">
-                            <span className="inline-block px-3 py-1 rounded-full bg-[#17ad96]/10 border border-[#17ad96]/20 text-[#17ad96] text-[10px] font-bold tracking-[0.2em] uppercase">
-                                Mission #{job.id.slice(-6).toUpperCase()}
+                            <span className="inline-block px-3 py-1 rounded-full bg-[#FB7427]/10 border border-[#FB7427]/20 text-[#FB7427] text-[10px] font-bold tracking-[0.2em] uppercase">
+                                Job #{job.id.slice(-6).toUpperCase()}
                             </span>
                             <div className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${job.status === "OPEN"
-                                ? "bg-[#17ad96]/20 text-[#17ad96] border-[#17ad96]/30"
-                                : "bg-blue-500/20 text-blue-400 border-blue-500/30"
+                                ? "bg-[#FB7427]/20 text-[#FB7427] border-[#FB7427]/30"
+                                : "bg-[#5BC2E7]/20 text-[#5BC2E7] border-[#5BC2E7]/30"
                                 }`}>
                                 {job.status}
                             </div>
@@ -117,13 +127,13 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
                         </h1>
                         <div className="flex flex-wrap gap-6 text-[11px] font-bold text-gray-500 tracking-widest uppercase">
                             <div className="flex items-center gap-2">
-                                <MapPin className="w-4 h-4 text-[#17ad96]" /> {job.location}
+                                <MapPin className="w-4 h-4 text-[#FB7427]" /> {job.location}
                             </div>
                             <div className="flex items-center gap-2">
-                                <Calendar className="w-4 h-4 text-[#17ad96]" /> {new Date(job.createdAt).toLocaleDateString()}
+                                <Calendar className="w-4 h-4 text-[#FB7427]" /> {new Date(job.createdAt).toLocaleDateString()}
                             </div>
                             <div className="flex items-center gap-2">
-                                <Briefcase className="w-4 h-4 text-[#17ad96]" /> {job.category}
+                                <Briefcase className="w-4 h-4 text-[#FB7427]" /> {job.category}
                             </div>
                         </div>
                     </div>
@@ -133,9 +143,9 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
                     {/* Main Content */}
                     <div className="lg:col-span-2 space-y-12">
                         {/* Description Card */}
-                        <div className="p-10 rounded-2xl bg-[#12171e] border border-white/5 space-y-8">
+                        <div className="p-10 rounded-2xl bg-[#18222e] border border-white/5 space-y-8">
                             <h2 className="text-2xl font-black text-white flex items-center gap-4 italic uppercase tracking-tighter">
-                                <Zap className="w-6 h-6 text-[#17ad96]" /> Mission Briefing
+                                <Zap className="w-6 h-6 text-[#FB7427]" /> Job description
                             </h2>
                             <div className="h-px bg-white/5 w-full"></div>
                             <div className="prose prose-invert max-w-none">
@@ -150,7 +160,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
                             <div className="space-y-8">
                                 <div className="flex items-center gap-6">
                                     <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter shrink-0">
-                                        Mission Command <span className="text-[#17ad96]/50 ml-2">Secure Link</span>
+                                        Messages <span className="text-[#FB7427]/50 ml-2"></span>
                                     </h2>
                                     <div className="flex-1 h-px bg-white/5"></div>
                                 </div>
@@ -163,11 +173,11 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
                         )}
 
                         {/* Deliverables Section */}
-                        {job.status === "AWARDED" && (
+                        {isActive && (
                             <div className="space-y-8">
                                 <div className="flex items-center gap-6">
                                     <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter shrink-0">
-                                        Mission <span className="text-blue-400">Deliverables</span>
+                                        Deliverables
                                     </h2>
                                     <div className="flex-1 h-px bg-white/5"></div>
                                 </div>
@@ -176,9 +186,9 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
                                     {/* Upload Area for Operator */}
                                     {isAwardedOperator && (
                                         <div className="space-y-4">
-                                            <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest pl-2">Upload Dispatch Assets</p>
+                                            <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest pl-2">Upload files</p>
                                             <FileUploader
-                                                label="Upload Final Assets"
+                                                label="Upload deliverables"
                                                 onUpload={async (url, name) => {
                                                     "use server"
                                                     await addDocument({
@@ -194,26 +204,26 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
 
                                     {/* Assets List */}
                                     <div className="space-y-4">
-                                        <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest pl-2">Available Assets</p>
+                                        <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest pl-2">Files</p>
                                         {(job.documents || []).length === 0 ? (
                                             <div className="p-10 rounded-2xl bg-black/20 border border-white/5 flex flex-col items-center justify-center text-center space-y-2 opacity-50">
                                                 <FileDown className="w-8 h-8 text-gray-700" />
-                                                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-600">No assets transmitted yet</p>
+                                                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-600">No files yet</p>
                                             </div>
                                         ) : (
                                             <div className="space-y-3">
                                                 {(job.documents || []).map((doc: any) => (
-                                                    <div key={doc.id} className="p-4 rounded-xl bg-[#12171e] border border-white/5 flex items-center justify-between hover:border-blue-400/30 transition-all">
+                                                    <div key={doc.id} className="p-4 rounded-xl bg-[#18222e] border border-white/5 flex items-center justify-between hover:border-[#5BC2E7]/30 transition-all">
                                                         <div className="flex items-center gap-4">
-                                                            <div className="h-10 w-10 rounded-lg bg-blue-400/10 flex items-center justify-center border border-blue-400/20">
-                                                                <FileDown className="w-5 h-5 text-blue-400" />
+                                                            <div className="h-10 w-10 rounded-lg bg-[#5BC2E7]/10 flex items-center justify-center border border-[#5BC2E7]/20">
+                                                                <FileDown className="w-5 h-5 text-[#5BC2E7]" />
                                                             </div>
                                                             <div>
                                                                 <p className="text-sm font-bold text-white truncate max-w-[150px]">{doc.name}</p>
                                                                 <p className="text-[9px] font-black text-gray-600 uppercase tracking-widest">Added {new Date(doc.createdAt).toLocaleDateString()}</p>
                                                             </div>
                                                         </div>
-                                                        <a href={doc.url} target="_blank" rel="noopener noreferrer" className="text-blue-400 p-2 hover:bg-blue-400/10 rounded-lg transition-colors">
+                                                        <a href={doc.url} target="_blank" rel="noopener noreferrer" className="text-[#5BC2E7] p-2 hover:bg-[#5BC2E7]/10 rounded-lg transition-colors">
                                                             <ArrowUpRight className="w-5 h-5" />
                                                         </a>
                                                     </div>
@@ -225,26 +235,90 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
                             </div>
                         )}
 
+                        {/* Project status + review */}
+                        {(isClient || isAwardedOperator) && isActive && (
+                            <div className="space-y-8">
+                                <div className="flex items-center gap-6">
+                                    <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter shrink-0">
+                                        Project <span className="text-[#5BC2E7]">Status</span>
+                                    </h2>
+                                    <div className="flex-1 h-px bg-white/5"></div>
+                                </div>
+
+                                {/* Payment */}
+                                {awardedProposal && (
+                                    <div className="p-6 rounded-2xl bg-[#18222e] border border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                        <div>
+                                            <p className="text-white font-bold">Payment</p>
+                                            <p className="text-sm text-gray-500">
+                                                {payment?.status === "PAID"
+                                                    ? "This job has been paid."
+                                                    : `Agreed price: $${Number(awardedProposal.price).toLocaleString()}`}
+                                            </p>
+                                        </div>
+                                        {payment?.status === "PAID" ? (
+                                            <span className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest border px-3 py-1.5 rounded-full bg-green-500/20 text-green-400 border-green-500/30">Paid</span>
+                                        ) : isClient && paymentsEnabled ? (
+                                            <PayButton jobId={job.id} amount={Number(awardedProposal.price)} />
+                                        ) : isClient ? (
+                                            <span className="text-[11px] font-bold text-gray-500 uppercase tracking-widest">Online payment coming soon</span>
+                                        ) : (
+                                            <span className="text-[11px] font-bold text-amber-400 uppercase tracking-widest">Awaiting payment</span>
+                                        )}
+                                    </div>
+                                )}
+
+                                {job.status === "AWARDED" && isClient && (
+                                    <div className="p-6 rounded-2xl bg-[#18222e] border border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                        <div>
+                                            <p className="text-white font-bold">Work delivered?</p>
+                                            <p className="text-sm text-gray-500">Mark this job complete to leave a review.</p>
+                                        </div>
+                                        <CompleteJobButton jobId={job.id} />
+                                    </div>
+                                )}
+
+                                {job.status === "AWARDED" && isAwardedOperator && (
+                                    <p className="text-sm text-gray-500">Waiting for the client to mark this job complete.</p>
+                                )}
+
+                                {job.review && (
+                                    <div className="p-6 rounded-2xl bg-[#18222e] border border-white/5 space-y-3">
+                                        <div className="flex items-center justify-between">
+                                            <StarRating value={job.review.rating} size="lg" />
+                                            <span className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">{new Date(job.review.createdAt).toLocaleDateString()}</span>
+                                        </div>
+                                        {job.review.comment && <p className="text-gray-300 leading-relaxed">&ldquo;{job.review.comment}&rdquo;</p>}
+                                        <p className="text-[11px] font-bold text-gray-500">Review by {job.review.client?.name || "Client"}</p>
+                                    </div>
+                                )}
+
+                                {job.status === "COMPLETED" && isClient && !job.review && (
+                                    <ReviewForm jobId={job.id} />
+                                )}
+                            </div>
+                        )}
+
                         {/* Action Area */}
                         {isOperator && hasApplied && (
-                            <div className="p-10 rounded-2xl bg-[#12171e] border-2 border-[#17ad96]/30 shadow-2xl shadow-[#17ad96]/5 mb-8">
+                            <div className="p-10 rounded-2xl bg-[#18222e] border-2 border-[#FB7427]/30 shadow-2xl shadow-[#FB7427]/5 mb-8">
                                 <div className="space-y-8">
                                     <div className="flex items-center gap-6">
                                         <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter shrink-0">
-                                            Your <span className="text-[#17ad96]">Proposal</span>
+                                            Your <span className="text-[#FB7427]">Proposal</span>
                                         </h2>
                                         <div className="flex-1 h-px bg-white/5"></div>
                                     </div>
                                     {(() => {
                                         const myProposal = job.proposals.find((p: any) => p.operatorId === operatorProfileId)
                                         return (
-                                            <div className="p-8 rounded-2xl bg-black/40 border border-white/5 space-y-6 relative overflow-hidden">
-                                                <div className="absolute top-0 right-0 p-4">
+                                            <div className="p-8 rounded-2xl bg-black/40 border border-white/5 space-y-6 overflow-hidden">
+                                                <div className="flex justify-end">
                                                     <div className={`px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest border ${myProposal?.status === "ACCEPTED"
                                                         ? "bg-green-500/20 text-green-400 border-green-500/30"
                                                         : myProposal?.status === "REJECTED"
                                                             ? "bg-red-500/20 text-red-400 border-red-500/30"
-                                                            : "bg-[#17ad96]/20 text-[#17ad96] border-[#17ad96]/30"
+                                                            : "bg-amber-500/20 text-amber-400 border-amber-500/30"
                                                         }`}>
                                                         {myProposal?.status}
                                                     </div>
@@ -266,7 +340,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
                                                 </div>
 
                                                 <div className="p-6 rounded-xl bg-black/20 border border-white/5 space-y-2">
-                                                    <p className="text-[10px] font-black text-[#17ad96] uppercase tracking-[0.2em]">Cover Letter / Remarks</p>
+                                                    <p className="text-[10px] font-black text-[#FB7427] uppercase tracking-[0.2em]">Cover Letter / Remarks</p>
                                                     <p className="text-sm text-gray-400 font-medium leading-relaxed italic">
                                                         "{myProposal?.message}"
                                                     </p>
@@ -279,7 +353,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
                         )}
 
                         {isOperator && job.status === "OPEN" && !hasApplied && (
-                            <div className="p-10 rounded-2xl bg-[#12171e] border-2 border-[#17ad96]/30 shadow-2xl shadow-[#17ad96]/5">
+                            <div className="p-10 rounded-2xl bg-[#18222e] border-2 border-[#FB7427]/30 shadow-2xl shadow-[#FB7427]/5">
                                 <ProposalForm jobId={job.id} operatorId={operatorProfileId!} />
                             </div>
                         )}
@@ -289,13 +363,13 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
                             <div className="space-y-8 pt-8 border-t border-white/5">
                                 <div className="flex items-center gap-6">
                                     <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter shrink-0">
-                                        Incoming Proposals <span className="text-[#17ad96]/50 ml-2">[{job.proposals?.length || 0}]</span>
+                                        Incoming Proposals <span className="text-[#FB7427]/50 ml-2">[{job.proposals?.length || 0}]</span>
                                     </h2>
                                     <div className="flex-1 h-px bg-white/5"></div>
                                 </div>
 
                                 {!job.proposals || job.proposals.length === 0 ? (
-                                    <div className="p-20 rounded-2xl border border-dashed border-white/10 bg-[#12171e]/30 text-center space-y-4">
+                                    <div className="p-20 rounded-2xl border border-dashed border-white/10 bg-[#18222e]/30 text-center space-y-4">
                                         <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mx-auto">
                                             <ShieldAlert className="w-8 h-8 text-gray-800" />
                                         </div>
@@ -330,30 +404,30 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
                     {/* Sidebar */}
                     <div className="space-y-8">
                         {/* Client Details Card */}
-                        <div className="p-10 rounded-2xl bg-[#12171e] border border-white/5 space-y-8">
-                            <h3 className="text-[10px] font-black text-gray-600 uppercase tracking-[0.4em]">Mission Commander</h3>
+                        <div className="p-10 rounded-2xl bg-[#18222e] border border-white/5 space-y-8">
+                            <h3 className="text-[10px] font-black text-gray-600 uppercase tracking-[0.4em]">Messageser</h3>
                             <div className="flex items-center gap-6">
-                                <div className="h-16 w-16 rounded-2xl bg-[#17ad96]/10 flex items-center justify-center border border-[#17ad96]/20 shadow-lg shadow-[#17ad96]/5">
-                                    <User className="h-8 w-8 text-[#17ad96]" />
+                                <div className="h-16 w-16 rounded-2xl bg-[#FB7427]/10 flex items-center justify-center border border-[#FB7427]/20 shadow-lg shadow-[#FB7427]/5">
+                                    <User className="h-8 w-8 text-[#FB7427]" />
                                 </div>
                                 <div className="space-y-1">
                                     <div className="text-xl font-black text-white leading-tight italic uppercase tracking-tight">{job.client.name}</div>
-                                    <div className="flex items-center gap-1.5 text-[9px] text-[#17ad96] font-black tracking-[0.2em] uppercase">
-                                        <ShieldCheck className="w-3 h-3" /> Alpha Status
+                                    <div className="flex items-center gap-1.5 text-[9px] text-[#FB7427] font-black tracking-[0.2em] uppercase">
+                                        <ShieldCheck className="w-3 h-3" /> Verified
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         {/* Quick Stats Sidebar */}
-                        <div className="p-8 rounded-2xl bg-[#12171e]/50 border border-white/5 space-y-6">
+                        <div className="p-8 rounded-2xl bg-[#18222e]/50 border border-white/5 space-y-6">
                             <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest text-gray-500">
                                 <span>Security Level</span>
-                                <span className="text-[#17ad96]">Encrypted</span>
+                                <span className="text-[#FB7427]">Encrypted</span>
                             </div>
                             <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest text-gray-500">
                                 <span>Airspace Verified</span>
-                                <span className="text-blue-400">Class G/B/D</span>
+                                <span className="text-[#5BC2E7]">Class G/B/D</span>
                             </div>
                             <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest text-gray-500">
                                 <span>Insurance Req</span>
@@ -363,9 +437,9 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
 
                         {/* Help Notice */}
                         <div className="p-6 rounded-2xl border border-dashed border-white/5 relative overflow-hidden group">
-                            <div className="absolute inset-0 bg-gradient-to-br from-[#17ad96]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <div className="absolute inset-0 bg-gradient-to-br from-[#FB7427]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             <p className="text-[10px] text-gray-500 leading-relaxed uppercase font-bold tracking-widest text-center relative z-10">
-                                Protected by DroneHub Secure Operations Protocol.
+                                Protected by DroneHub.
                             </p>
                         </div>
                     </div>

@@ -2,11 +2,11 @@
 
 @theme {
   /* DroneHub Professional Theme Colors */
-  --color-background: hsl(210 24% 7%);
+  --color-background: hsl(212 39% 9%);
   --color-foreground: hsl(0 0% 98%);
 
-  --color-primary: hsl(174 80% 50%);
-  --color-primary-foreground: hsl(210 24% 7%);
+  --color-primary: hsl(22 96% 57%);
+  --color-primary-foreground: hsl(212 39% 9%);
 
   --color-card: hsl(210 20% 12%);
   --color-card-foreground: hsl(0 0% 98%);
@@ -20,15 +20,15 @@
   --color-muted: hsl(210 20% 16%);
   --color-muted-foreground: hsl(0 0% 65%);
 
-  --color-accent: hsl(174 80% 50%);
-  --color-accent-foreground: hsl(210 24% 7%);
+  --color-accent: hsl(22 96% 57%);
+  --color-accent-foreground: hsl(212 39% 9%);
 
   --color-destructive: hsl(0 84.2% 60.2%);
   --color-destructive-foreground: hsl(0 0% 98%);
 
   --color-border: hsl(210 20% 18%);
   --color-input: hsl(210 20% 16%);
-  --color-ring: hsl(174 80% 50%);
+  --color-ring: hsl(22 96% 57%);
 
   --font-sans: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
 
@@ -57,17 +57,17 @@
 /* Custom visual utilities */
 .hero-gradient {
   background: linear-gradient(180deg,
-      #111821 0%,
-      #0d1218 50%,
-      #0a0d11 100%);
+      #18222e 0%,
+      #0f1722 50%,
+      #0f1722 100%);
 }
 
 .teal-glow {
-  box-shadow: 0 0 30px hsla(174, 80%, 50%, 0.4);
+  box-shadow: 0 0 30px hsla(22, 96%, 57%, 0.4);
 }
 
 .teal-glow-strong {
-  box-shadow: 0 0 60px hsla(174, 80%, 50%, 0.3);
+  box-shadow: 0 0 60px hsla(22, 96%, 57%, 0.3);
 }
 
 /* Ensure headings are visible */

@@ -46,7 +46,7 @@ export function ClientRegistrationForm() {
                 setError(result.error)
             }
         } catch (e) {
-            setError("Communication failure. Please re-transmit data.")
+            setError("Something went wrong. Please try again.")
         } finally {
             setLoading(false)
         }
@@ -55,11 +55,11 @@ export function ClientRegistrationForm() {
     return (
         <div className="w-full max-w-md space-y-10">
             <div className="space-y-4 text-center">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#17ad96]/10 border border-[#17ad96]/20 mx-auto">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#17ad96]" />
-                    <span className="text-[10px] font-bold text-[#17ad96] uppercase tracking-[0.2em]">Secure Entry</span>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FB7427]/10 border border-[#FB7427]/20 mx-auto">
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#FB7427]" />
+                    <span className="text-[10px] font-bold text-[#FB7427] uppercase tracking-[0.2em]">Secure Entry</span>
                 </div>
-                <h2 className="text-4xl font-black text-white uppercase italic tracking-tighter">Mission Commander</h2>
+                <h2 className="text-4xl font-black text-white uppercase italic tracking-tighter">Messageser</h2>
                 <p className="text-gray-500 text-sm font-medium">Register to post contracts and enlist elite drone pilots.</p>
             </div>
 
@@ -78,13 +78,13 @@ export function ClientRegistrationForm() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                        <User className="w-3 h-3 text-[#17ad96]" /> Name or Organization
+                                        <User className="w-3 h-3 text-[#FB7427]" /> Name or Organization
                                     </FormLabel>
                                     <FormControl>
                                         <Input
                                             placeholder="e.g. Global Tech Solutions"
                                             {...field}
-                                            className="bg-[#12171e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#17ad96]/50 rounded-xl"
+                                            className="bg-[#18222e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#FB7427]/50 rounded-xl"
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -98,13 +98,13 @@ export function ClientRegistrationForm() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                        <Mail className="w-3 h-3 text-[#17ad96]" /> Direct Frequency
+                                        <Mail className="w-3 h-3 text-[#FB7427]" /> Direct Frequency
                                     </FormLabel>
                                     <FormControl>
                                         <Input
                                             placeholder="commander@org.com"
                                             {...field}
-                                            className="bg-[#12171e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#17ad96]/50 rounded-xl"
+                                            className="bg-[#18222e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#FB7427]/50 rounded-xl"
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -118,14 +118,14 @@ export function ClientRegistrationForm() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                        <Lock className="w-3 h-3 text-[#17ad96]" /> Security Key
+                                        <Lock className="w-3 h-3 text-[#FB7427]" /> Security Key
                                     </FormLabel>
                                     <FormControl>
                                         <Input
                                             type="password"
                                             placeholder="••••••••"
                                             {...field}
-                                            className="bg-[#12171e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#17ad96]/50 rounded-xl"
+                                            className="bg-[#18222e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#FB7427]/50 rounded-xl"
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -136,7 +136,7 @@ export function ClientRegistrationForm() {
 
                     <Button
                         type="submit"
-                        className="w-full bg-[#17ad96] hover:bg-[#159a85] text-[#0a0d11] font-black uppercase tracking-tighter h-14 text-lg rounded-xl shadow-xl shadow-[#17ad96]/10 transition-all active:scale-95 mt-4"
+                        className="w-full bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-black uppercase tracking-tighter h-14 text-lg rounded-xl shadow-xl shadow-[#FB7427]/10 transition-all active:scale-95 mt-4"
                         disabled={loading}
                     >
                         {loading ? "Authenticating..." : "Establish Command"}

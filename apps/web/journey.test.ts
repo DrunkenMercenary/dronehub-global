@@ -10,7 +10,12 @@ import { createJob, getOperatorFeed, getClientJobs } from "@/app/actions/job"
 import { createProposal, awardProposal, getOperatorProposals } from "@/app/actions/proposal"
 import { getPendingOperators, updateOperatorStatus, getAdminStats } from "@/app/actions/admin"
 import { getOrCreateThread, sendMessage, getMessages } from "@/app/actions/message"
-import { addDocument } from "@/app/actions/document"
+import { addDocument, getOperatorDocuments } from "@/app/actions/document"
+import { createPackage, getOperatorPackages, getPublicPackages, orderPackage, togglePackageActive } from "@/app/actions/package"
+import { createCheckoutSession, getJobPayment } from "@/app/actions/payment"
+import { fulfilPayment } from "@/lib/payments"
+import { completeJob, createReview, getOperatorReviews } from "@/app/actions/review"
+import { getApprovedOperators, getPublicOperator } from "@/lib/operators"
 
 let pass = 0, fail = 0
 function check(name: string, cond: boolean, detail = "") {
@@ -56,6 +61,14 @@ async function main() {
         const blocked = await act(() => createProposal({ jobId: seedJob.id, operatorId: opId, amount: 500, deliveryTime: "3 Days", coverLetter: "Pre-approval attempt" } as any)) as any
         check("proposal blocked pre-approval", blocked?.error?.includes("approved"), JSON.stringify(blocked))
     }
+
+    // 3b. Operator uploads a credential document while pending
+    await act(() => addDocument({ url: "/api/files/licence-test.pdf", name: "drone_licence.pdf", type: "LICENSE", operatorProfileId: opId }))
+    const opDocs = await getOperatorDocuments(opId)
+    check("operator licence document saved", opDocs.some((d: any) => d.type === "LICENSE"), `count=${opDocs.length}`)
+    const pendingWithDocs = await getPendingOperators()
+    const mePending = pendingWithDocs.find((o: any) => o.id === opId)
+    check("admin sees operator documents in queue", (mePending?.documents?.length ?? 0) > 0, JSON.stringify(mePending?.documents?.length))
 
     // 4. Admin approves
     await updateOperatorStatus(opId, "APPROVED")
@@ -142,6 +155,81 @@ async function main() {
     // 17. Admin stats sane
     const stats = await getAdminStats()
     check("admin stats counts populated", stats.users.total > 0 && stats.jobs.total > 0, JSON.stringify(stats))
+
+    console.log("\n=== COMPLETION + REVIEWS ===")
+    // Cannot review before completion
+    const earlyReview = await act(() => createReview({ jobId: newJob!.id, rating: 5, comment: "Too soon" } as any, clEmail)) as any
+    check("review blocked before completion", earlyReview?.error?.includes("complete"), JSON.stringify(earlyReview))
+
+    // Non-owner cannot complete
+    if (otherClient) {
+        const badComplete = await act(() => completeJob(newJob!.id, otherClient.email!)) as any
+        check("complete blocked for non-owner", !!badComplete?.error, JSON.stringify(badComplete))
+    }
+
+    // Client marks complete
+    const completed = await act(() => completeJob(newJob!.id, clEmail)) as any
+    check("job marked completed", completed?.success === true, JSON.stringify(completed))
+    const cj = await prisma.jobRequest.findUnique({ where: { id: newJob!.id } })
+    check("job status COMPLETED in DB", cj?.status === "COMPLETED", cj?.status)
+
+    // Client leaves a review
+    const rev = await act(() => createReview({ jobId: newJob!.id, rating: 5, comment: "Excellent work, fast turnaround." } as any, clEmail)) as any
+    check("review created", rev?.success === true, JSON.stringify(rev))
+
+    // Duplicate review blocked
+    const dupRev = await act(() => createReview({ jobId: newJob!.id, rating: 3, comment: "again" } as any, clEmail)) as any
+    check("duplicate review blocked", dupRev?.error?.includes("already"), JSON.stringify(dupRev))
+
+    // Operator reviews list + aggregate rating
+    const opReviews = await getOperatorReviews(opId)
+    check("operator has the review", opReviews.some((r: any) => r.rating === 5), `count=${opReviews.length}`)
+    const pub = await getPublicOperator(opId)
+    check("operator aggregate rating = 5.0", pub?.ratingAvg === 5 && pub?.ratingCount === 1, JSON.stringify({ avg: pub?.ratingAvg, n: pub?.ratingCount }))
+    const dir = await getApprovedOperators()
+    const me = dir.find((o: any) => o.id === opId)
+    check("directory shows rating for operator", me?.ratingAvg === 5 && me?.ratingCount === 1, JSON.stringify({ avg: me?.ratingAvg, n: me?.ratingCount }))
+
+    console.log("\n=== SERVICE PACKAGES ===")
+    await act(() => createPackage({ title: "Roof inspection package", description: "Full thermal roof inspection with a written report.", category: "inspection", price: 450, deliveryDays: 5 } as any, opEmail))
+    const myPkgs = await getOperatorPackages(opEmail)
+    check("operator package created", myPkgs.length > 0, `n=${myPkgs.length}`)
+    const pkgId = myPkgs[0]?.id
+    const pubPkgs = await getPublicPackages(opId)
+    check("package is public + active", pubPkgs.some((p: any) => p.id === pkgId))
+    const order = await act(() => orderPackage(pkgId, clEmail)) as any
+    check("package ordered", order?.success === true && !!order.jobId, JSON.stringify(order))
+    const orderedJob = order?.jobId ? await prisma.jobRequest.findUnique({ where: { id: order.jobId }, include: { proposals: true } }) : null
+    check("order created an AWARDED job", orderedJob?.status === "AWARDED", orderedJob?.status)
+    check("order created an ACCEPTED proposal for the operator", !!orderedJob?.proposals.find((p: any) => p.operatorId === opId && p.status === "ACCEPTED"))
+    await act(() => togglePackageActive(pkgId, opEmail))
+    const pubPkgs2 = await getPublicPackages(opId)
+    check("hidden package is not public", !pubPkgs2.some((p: any) => p.id === pkgId))
+
+    console.log("\n=== NOTIFICATIONS ===")
+    const opNotifs = await prisma.notification.findMany({ where: { userId: opUser!.id } })
+    const clNotifs = await prisma.notification.findMany({ where: { userId: clUser!.id } })
+    const opTypes = new Set(opNotifs.map((n: any) => n.type))
+    const clTypes = new Set(clNotifs.map((n: any) => n.type))
+    check("client notified of new proposal", clTypes.has("proposal"))
+    check("operator notified of award", opTypes.has("award"))
+    check("operator notified of approval", opTypes.has("approval"))
+    check("operator notified of review", opTypes.has("review"))
+    check("message notification delivered", [...opNotifs, ...clNotifs].some((n: any) => n.type === "message"))
+    const admin = await prisma.user.findFirst({ where: { role: "ADMIN" } })
+    const adminNotifs = admin ? await prisma.notification.findMany({ where: { userId: admin.id } }) : []
+    check("admin notified of operator signup", adminNotifs.some((n: any) => n.type === "operator_signup"))
+    check("operator notified of package order", opTypes.has("order"))
+
+    console.log("\n=== PAYMENTS ===")
+    const noPay = await act(() => createCheckoutSession(newJob!.id, clEmail)) as any
+    check("checkout gracefully disabled without keys", noPay?.error?.includes("not enabled"), JSON.stringify(noPay))
+    await prisma.payment.create({ data: { jobId: newJob!.id, amount: 750, currency: "usd", status: "PENDING", stripeSessionId: "cs_test_123" } })
+    await fulfilPayment(newJob!.id, "pi_test_123")
+    const pay = await getJobPayment(newJob!.id)
+    check("payment marked PAID after fulfilment", pay?.status === "PAID", JSON.stringify(pay))
+    const payNotifs = await prisma.notification.findMany({ where: { userId: opUser!.id } })
+    check("operator notified of payment", payNotifs.some((n: any) => n.type === "payment"))
 
     console.log(`\n=== RESULT: ${pass} passed, ${fail} failed ===`)
     await prisma.$disconnect()

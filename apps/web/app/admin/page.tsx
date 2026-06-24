@@ -33,16 +33,16 @@ export default async function AdminDashboardPage() {
             value: stats.users.total,
             sub: `${stats.users.operators} Pilots / ${stats.users.clients} COMMANDERS`,
             icon: Users,
-            color: "text-[#17ad96]",
-            bg: "bg-[#17ad96]/10"
+            color: "text-[#FB7427]",
+            bg: "bg-[#FB7427]/10"
         },
         {
-            label: "Mission Volume",
+            label: "Total value",
             value: stats.jobs.total,
             sub: `${stats.jobs.open} ACTIVE SORTIES`,
             icon: Briefcase,
-            color: "text-blue-400",
-            bg: "bg-blue-400/10"
+            color: "text-[#5BC2E7]",
+            bg: "bg-[#5BC2E7]/10"
         },
         {
             label: "Platform Revenue",
@@ -55,18 +55,18 @@ export default async function AdminDashboardPage() {
     ]
 
     return (
-        <div className="min-h-screen bg-[#0a0d11] py-16 md:py-24">
+        <div className="min-h-screen bg-[#0f1722] py-16 md:py-24">
             <div className="container px-4 md:px-6">
 
                 {/* Header */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-16">
                     <div className="space-y-4">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#17ad96]/10 border border-[#17ad96]/20">
-                            <ShieldCheck className="w-3.5 h-3.5 text-[#17ad96]" />
-                            <span className="text-[10px] font-bold text-[#17ad96] uppercase tracking-[0.2em]">HQ Command</span>
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FB7427]/10 border border-[#FB7427]/20">
+                            <ShieldCheck className="w-3.5 h-3.5 text-[#FB7427]" />
+                            <span className="text-[10px] font-bold text-[#FB7427] uppercase tracking-[0.2em]">HQ Command</span>
                         </div>
                         <h1 className="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter">
-                            Global <span className="text-[#17ad96]">Operations</span>
+                            Global <span className="text-[#FB7427]">Operations</span>
                         </h1>
                         <p className="text-gray-500 font-medium text-lg leading-relaxed max-w-xl">
                             Real-time platform intelligence and mission control.
@@ -75,7 +75,7 @@ export default async function AdminDashboardPage() {
 
                     <div className="flex gap-4">
                         <Link href="/admin/operators">
-                            <Button className="bg-[#17ad96] hover:bg-[#159a85] text-[#0a0d11] font-black uppercase tracking-tighter h-12 px-8 rounded-xl flex items-center gap-2 group transition-all">
+                            <Button className="bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-black uppercase tracking-tighter h-12 px-8 rounded-xl flex items-center gap-2 group transition-all">
                                 Review Queue <UserPlus className="w-4 h-4 group-hover:scale-110 transition-transform" />
                             </Button>
                         </Link>
@@ -85,7 +85,7 @@ export default async function AdminDashboardPage() {
                 {/* KPI Grid */}
                 <div className="grid gap-6 md:grid-cols-3 mb-16">
                     {kpis.map((kpi, i) => (
-                        <div key={i} className="p-8 rounded-2xl bg-[#12171e] border border-white/5 relative overflow-hidden group hover:border-white/10 transition-all">
+                        <div key={i} className="p-8 rounded-2xl bg-[#18222e] border border-white/5 relative overflow-hidden group hover:border-white/10 transition-all">
                             <div className="relative z-10 flex justify-between items-start">
                                 <div className="space-y-2">
                                     <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest">{kpi.label}</p>
@@ -105,7 +105,7 @@ export default async function AdminDashboardPage() {
                 <div className="grid gap-12 lg:grid-cols-3">
                     <div className="lg:col-span-2 space-y-8">
                         <div className="flex items-center gap-4">
-                            <Activity className="w-5 h-5 text-[#17ad96]" />
+                            <Activity className="w-5 h-5 text-[#FB7427]" />
                             <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter">System Pulse</h2>
                         </div>
 
@@ -127,8 +127,8 @@ export default async function AdminDashboardPage() {
                                         <tr key={i} className="hover:bg-white/[0.02] transition-colors group">
                                             <td className="px-6 py-4 text-sm font-bold text-white uppercase italic tracking-tight">{row.op}</td>
                                             <td className="px-6 py-4">
-                                                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#17ad96]/10 text-[#17ad96] text-[9px] font-black uppercase tracking-widest border border-[#17ad96]/20">
-                                                    <div className="w-1 h-1 rounded-full bg-[#17ad96] animate-pulse"></div>
+                                                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#FB7427]/10 text-[#FB7427] text-[9px] font-black uppercase tracking-widest border border-[#FB7427]/20">
+                                                    <div className="w-1 h-1 rounded-full bg-[#FB7427] animate-pulse"></div>
                                                     {row.status}
                                                 </span>
                                             </td>
@@ -142,7 +142,7 @@ export default async function AdminDashboardPage() {
 
                     <div className="space-y-8">
                         <div className="flex items-center gap-4">
-                            <LayoutDashboard className="w-5 h-5 text-blue-400" />
+                            <LayoutDashboard className="w-5 h-5 text-[#5BC2E7]" />
                             <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter">Quick Access</h2>
                         </div>
 
@@ -153,12 +153,12 @@ export default async function AdminDashboardPage() {
                                 { label: "Platform Settings", sub: "Global environment config", href: "#" },
                             ].map((link, i) => (
                                 <Link key={i} href={link.href} className="group">
-                                    <div className="p-6 rounded-2xl bg-[#12171e] border border-white/5 group-hover:border-[#17ad96]/30 transition-all flex justify-between items-center">
+                                    <div className="p-6 rounded-2xl bg-[#18222e] border border-white/5 group-hover:border-[#FB7427]/30 transition-all flex justify-between items-center">
                                         <div className="space-y-1">
                                             <p className="text-sm font-black text-white italic uppercase tracking-tight">{link.label}</p>
                                             <p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">{link.sub}</p>
                                         </div>
-                                        <ArrowUpRight className="w-5 h-5 text-gray-700 group-hover:text-[#17ad96] transition-colors" />
+                                        <ArrowUpRight className="w-5 h-5 text-gray-700 group-hover:text-[#FB7427] transition-colors" />
                                     </div>
                                 </Link>
                             ))}

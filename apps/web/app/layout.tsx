@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} font-sans antialiased min-h-screen flex flex-col bg-[#0a0d11]`}
+        className={`${inter.variable} font-sans antialiased min-h-screen flex flex-col bg-[#0f1722]`}
       >
         <Providers>
           <Navbar />

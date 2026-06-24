@@ -70,7 +70,7 @@ export function OnboardingForm() {
                 setError(result.error)
             }
         } catch (e) {
-            setError("Communication failure. Please re-transmit data.")
+            setError("Something went wrong. Please try again.")
         } finally {
             setLoading(false)
         }
@@ -80,12 +80,12 @@ export function OnboardingForm() {
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-12">
                 <div className="space-y-4">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#17ad96]/10 border border-[#17ad96]/20">
-                        <Plane className="w-3.5 h-3.5 text-[#17ad96]" />
-                        <span className="text-[10px] font-bold text-[#17ad96] uppercase tracking-[0.2em]">Pilot Registration</span>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FB7427]/10 border border-[#FB7427]/20">
+                        <Plane className="w-3.5 h-3.5 text-[#FB7427]" />
+                        <span className="text-[10px] font-bold text-[#FB7427] uppercase tracking-[0.2em]">Operator sign-up</span>
                     </div>
-                    <h2 className="text-3xl font-black text-white uppercase italic tracking-tighter">Enlist in the Fleet</h2>
-                    <p className="text-gray-500 text-sm font-medium">Provide your credentials and specialties to access global missions.</p>
+                    <h2 className="text-3xl font-black text-white uppercase italic tracking-tighter">Join as an operator</h2>
+                    <p className="text-gray-500 text-sm font-medium">Tell us about your services to start receiving jobs.</p>
                 </div>
 
                 {error && (
@@ -102,17 +102,17 @@ export function OnboardingForm() {
                         render={({ field }) => (
                             <FormItem className="space-y-4">
                                 <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                    <ShieldCheck className="w-3.5 h-3.5 text-[#17ad96]" /> Operator Identity
+                                    <ShieldCheck className="w-3.5 h-3.5 text-[#FB7427]" /> Account type
                                 </FormLabel>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div
                                         onClick={() => field.onChange("INDIVIDUAL")}
                                         className={`flex items-center gap-4 p-4 rounded-xl border cursor-pointer transition-all ${field.value === "INDIVIDUAL"
-                                            ? "bg-[#17ad96]/10 border-[#17ad96]/30 text-white shadow-lg shadow-[#17ad96]/5"
-                                            : "bg-[#12171e] border-white/5 text-gray-500 hover:border-white/10"
+                                            ? "bg-[#FB7427]/10 border-[#FB7427]/30 text-white shadow-lg shadow-[#FB7427]/5"
+                                            : "bg-[#18222e] border-white/5 text-gray-500 hover:border-white/10"
                                             }`}
                                     >
-                                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${field.value === "INDIVIDUAL" ? "bg-[#17ad96]/20 text-[#17ad96]" : "bg-white/5"}`}>
+                                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${field.value === "INDIVIDUAL" ? "bg-[#FB7427]/20 text-[#FB7427]" : "bg-white/5"}`}>
                                             <User className="w-5 h-5" />
                                         </div>
                                         <div className="text-left">
@@ -124,15 +124,15 @@ export function OnboardingForm() {
                                     <div
                                         onClick={() => field.onChange("COMPANY")}
                                         className={`flex items-center gap-4 p-4 rounded-xl border cursor-pointer transition-all ${field.value === "COMPANY"
-                                            ? "bg-[#17ad96]/10 border-[#17ad96]/30 text-white shadow-lg shadow-[#17ad96]/5"
-                                            : "bg-[#12171e] border-white/5 text-gray-500 hover:border-white/10"
+                                            ? "bg-[#FB7427]/10 border-[#FB7427]/30 text-white shadow-lg shadow-[#FB7427]/5"
+                                            : "bg-[#18222e] border-white/5 text-gray-500 hover:border-white/10"
                                             }`}
                                     >
-                                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${field.value === "COMPANY" ? "bg-[#17ad96]/20 text-[#17ad96]" : "bg-white/5"}`}>
+                                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${field.value === "COMPANY" ? "bg-[#FB7427]/20 text-[#FB7427]" : "bg-white/5"}`}>
                                             <Building className="w-5 h-5" />
                                         </div>
                                         <div className="text-left">
-                                            <p className="text-xs font-black uppercase italic leading-none mb-1">Service Co.</p>
+                                            <p className="text-xs font-black uppercase italic leading-none mb-1">Company</p>
                                             <p className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Agency / Team</p>
                                         </div>
                                     </div>
@@ -150,13 +150,13 @@ export function OnboardingForm() {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                            <Building className="w-3 h-3 text-[#17ad96]" /> Registered Company Name
+                                            <Building className="w-3 h-3 text-[#FB7427]" /> Registered Company Name
                                         </FormLabel>
                                         <FormControl>
                                             <Input
                                                 placeholder="e.g. Apex Aerial Solutions"
                                                 {...field}
-                                                className="bg-[#12171e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#17ad96]/50 rounded-xl"
+                                                className="bg-[#18222e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#FB7427]/50 rounded-xl"
                                             />
                                         </FormControl>
                                         <FormMessage />
@@ -169,14 +169,14 @@ export function OnboardingForm() {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                            <Users className="w-3 h-3 text-[#17ad96]" /> Total Fleet Pilots
+                                            <Users className="w-3 h-3 text-[#FB7427]" /> Total Fleet Pilots
                                         </FormLabel>
                                         <FormControl>
                                             <Input
                                                 type="number"
                                                 placeholder="1"
                                                 {...field}
-                                                className="bg-[#12171e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#17ad96]/50 rounded-xl"
+                                                className="bg-[#18222e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#FB7427]/50 rounded-xl"
                                             />
                                         </FormControl>
                                         <FormMessage />
@@ -194,13 +194,13 @@ export function OnboardingForm() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                        <User className="w-3 h-3 text-[#17ad96]" /> {form.watch("type") === "COMPANY" ? "Primary Contact / Lead Pilot" : "Full Name / Call Sign"}
+                                        <User className="w-3 h-3 text-[#FB7427]" /> {form.watch("type") === "COMPANY" ? "Primary Contact / Lead Pilot" : "Full Name / Call Sign"}
                                     </FormLabel>
                                     <FormControl>
                                         <Input
                                             placeholder={form.watch("type") === "COMPANY" ? "Lead Pilot Name" : "e.g. John 'Maverick' Doe"}
                                             {...field}
-                                            className="bg-[#12171e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#17ad96]/50 rounded-xl"
+                                            className="bg-[#18222e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#FB7427]/50 rounded-xl"
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -213,13 +213,13 @@ export function OnboardingForm() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                        <Mail className="w-3 h-3 text-[#17ad96]" /> Contact Frequency
+                                        <Mail className="w-3 h-3 text-[#FB7427]" /> Contact Frequency
                                     </FormLabel>
                                     <FormControl>
                                         <Input
                                             placeholder="pilot@dronehub.global"
                                             {...field}
-                                            className="bg-[#12171e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#17ad96]/50 rounded-xl"
+                                            className="bg-[#18222e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#FB7427]/50 rounded-xl"
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -234,14 +234,14 @@ export function OnboardingForm() {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                    <Lock className="w-3 h-3 text-[#17ad96]" /> Security Key
+                                    <Lock className="w-3 h-3 text-[#FB7427]" /> Security Key
                                 </FormLabel>
                                 <FormControl>
                                     <Input
                                         type="password"
                                         placeholder="••••••••"
                                         {...field}
-                                        className="bg-[#12171e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#17ad96]/50 rounded-xl"
+                                        className="bg-[#18222e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#FB7427]/50 rounded-xl"
                                     />
                                 </FormControl>
                                 <FormMessage />
@@ -255,12 +255,12 @@ export function OnboardingForm() {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                    <Briefcase className="w-3 h-3 text-[#17ad96]" /> Pilot Dossier
+                                    <Briefcase className="w-3 h-3 text-[#FB7427]" /> About you
                                 </FormLabel>
                                 <FormControl>
                                     <Textarea
-                                        placeholder="Detail your flight hours, specialized equipment (LiDAR, Thermal), and certifications..."
-                                        className="resize-none bg-[#12171e] border-white/5 min-h-[120px] text-white placeholder:text-gray-600 focus:border-[#17ad96]/50 rounded-xl"
+                                        placeholder="Describe your experience, equipment, and certifications..."
+                                        className="resize-none bg-[#18222e] border-white/5 min-h-[120px] text-white placeholder:text-gray-600 focus:border-[#FB7427]/50 rounded-xl"
                                         {...field}
                                     />
                                 </FormControl>
@@ -276,7 +276,7 @@ export function OnboardingForm() {
                         render={() => (
                             <FormItem>
                                 <div className="mb-4 space-y-1">
-                                    <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px]">Mission Specialties</FormLabel>
+                                    <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px]">Services offered</FormLabel>
                                     <FormDescription className="text-gray-600 text-[10px] uppercase font-bold tracking-tighter">
                                         Select at least one sector of operation.
                                     </FormDescription>
@@ -293,14 +293,14 @@ export function OnboardingForm() {
                                                     <FormItem
                                                         key={item.id}
                                                         className={`flex flex-row items-center space-x-3 space-y-0 p-4 rounded-xl border transition-all duration-300 cursor-pointer ${isChecked
-                                                            ? "bg-[#17ad96]/10 border-[#17ad96]/30 text-white"
-                                                            : "bg-[#12171e] border-white/5 text-gray-400 hover:border-white/10"
+                                                            ? "bg-[#FB7427]/10 border-[#FB7427]/30 text-white"
+                                                            : "bg-[#18222e] border-white/5 text-gray-400 hover:border-white/10"
                                                             }`}
                                                     >
                                                         <FormControl>
                                                             <Checkbox
                                                                 checked={isChecked}
-                                                                className="border-white/20 data-[state=checked]:bg-[#17ad96] data-[state=checked]:border-[#17ad96]"
+                                                                className="border-white/20 data-[state=checked]:bg-[#FB7427] data-[state=checked]:border-[#FB7427]"
                                                                 onCheckedChange={(checked: boolean) => {
                                                                     const currentValues = (field.value as string[]) || []
                                                                     return checked === true
@@ -333,14 +333,14 @@ export function OnboardingForm() {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                    <MapPin className="w-3 h-3 text-[#17ad96]" /> Operational Radius (KM)
+                                    <MapPin className="w-3 h-3 text-[#FB7427]" /> Service radius (km)
                                 </FormLabel>
                                 <FormControl>
                                     <div className="relative">
                                         <Input
                                             type="number"
                                             {...field}
-                                            className="bg-[#12171e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#17ad96]/50 rounded-xl pr-12"
+                                            className="bg-[#18222e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#FB7427]/50 rounded-xl pr-12"
                                         />
                                         <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-bold text-gray-600 uppercase">KM</div>
                                     </div>
@@ -353,10 +353,10 @@ export function OnboardingForm() {
 
                 <Button
                     type="submit"
-                    className="w-full bg-[#17ad96] hover:bg-[#159a85] text-[#0a0d11] font-black uppercase tracking-tighter h-16 text-xl rounded-xl shadow-xl shadow-[#17ad96]/10 transition-all active:scale-95"
+                    className="w-full bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-black uppercase tracking-tighter h-16 text-xl rounded-xl shadow-xl shadow-[#FB7427]/10 transition-all active:scale-95"
                     disabled={loading}
                 >
-                    {loading ? "Transmitting Credentials..." : "Initiate Onboarding"}
+                    {loading ? "Submitting..." : "Create profile"}
                 </Button>
             </form>
         </Form>

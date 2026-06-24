@@ -32,35 +32,35 @@ function LoginContent() {
             })
 
             if (result?.error) {
-                setError("Authorization failed. Check credentials and protocol.")
+                setError("Sign in failed. Please check your email and password.")
             } else if (result?.ok) {
                 router.push(callbackUrl)
                 router.refresh()
             }
         } catch (e) {
-            setError("Communication failure. Please re-transmit.")
+            setError("Something went wrong. Please try again.")
         } finally {
             setLoading(false)
         }
     }
 
     return (
-        <div className="min-h-screen bg-[#0a0d11] flex flex-col items-center justify-center p-4">
+        <div className="min-h-screen bg-[#0f1722] flex flex-col items-center justify-center p-4">
             <div className="w-full max-w-md space-y-8">
                 {/* Brand Header */}
                 <div className="text-center space-y-4">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#17ad96]/10 border border-[#17ad96]/20 mx-auto">
-                        <ShieldCheck className="w-3.5 h-3.5 text-[#17ad96]" />
-                        <span className="text-[10px] font-bold text-[#17ad96] uppercase tracking-[0.2em]">Secure Authentication</span>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FB7427]/10 border border-[#FB7427]/20 mx-auto">
+                        <ShieldCheck className="w-3.5 h-3.5 text-[#FB7427]" />
+                        <span className="text-[10px] font-bold text-[#FB7427] uppercase tracking-[0.2em]">Welcome back</span>
                     </div>
-                    <h1 className="text-4xl font-black text-white uppercase italic tracking-tighter">Command Login</h1>
-                    <p className="text-gray-500 text-sm font-medium italic">Access the global mission network.</p>
+                    <h1 className="text-4xl font-black text-white uppercase italic tracking-tighter">Sign in</h1>
+                    <p className="text-gray-500 text-sm font-medium italic">Sign in to your account.</p>
                 </div>
 
-                <Card className="bg-[#12171e] border-white/5 shadow-2xl shadow-black/50 overflow-hidden rounded-2xl">
+                <Card className="bg-[#18222e] border-white/5 shadow-2xl shadow-black/50 overflow-hidden rounded-2xl">
                     <CardHeader className="pb-2">
                         <CardTitle className="text-white text-lg font-bold uppercase tracking-widest hidden">Sign In</CardTitle>
-                        <CardDescription className="text-gray-500 font-medium"> Establish a secure uplink to begin operations.</CardDescription>
+                        <CardDescription className="text-gray-500 font-medium"> Sign in to continue.</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={handleSubmit} className="space-y-6">
@@ -73,7 +73,7 @@ function LoginContent() {
                             <div className="space-y-5">
                                 <div className="space-y-2">
                                     <label htmlFor="email" className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                        <Mail className="w-3 h-3 text-[#17ad96]" /> Identification Email
+                                        <Mail className="w-3 h-3 text-[#FB7427]" /> Email
                                     </label>
                                     <Input
                                         id="email"
@@ -83,13 +83,13 @@ function LoginContent() {
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         required
-                                        className="bg-[#0a0d11] border-white/5 h-12 text-white placeholder:text-gray-700 focus:border-[#17ad96]/50 rounded-xl transition-all"
+                                        className="bg-[#0f1722] border-white/5 h-12 text-white placeholder:text-gray-700 focus:border-[#FB7427]/50 rounded-xl transition-all"
                                     />
                                 </div>
 
                                 <div className="space-y-2">
                                     <label htmlFor="password" className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                        <Lock className="w-3 h-3 text-[#17ad96]" /> Access Key
+                                        <Lock className="w-3 h-3 text-[#FB7427]" /> Password
                                     </label>
                                     <Input
                                         id="password"
@@ -99,22 +99,22 @@ function LoginContent() {
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                         required
-                                        className="bg-[#0a0d11] border-white/5 h-12 text-white placeholder:text-gray-700 focus:border-[#17ad96]/50 rounded-xl transition-all"
+                                        className="bg-[#0f1722] border-white/5 h-12 text-white placeholder:text-gray-700 focus:border-[#FB7427]/50 rounded-xl transition-all"
                                     />
                                 </div>
                             </div>
 
-                            <Button type="submit" className="w-full bg-[#17ad96] hover:bg-[#159a85] text-[#0a0d11] font-black uppercase tracking-tighter h-14 rounded-xl shadow-lg shadow-[#17ad96]/5 group transition-all active:scale-[0.98]" disabled={loading}>
-                                {loading ? "Authorizing..." : (
+                            <Button type="submit" className="w-full bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-black uppercase tracking-tighter h-14 rounded-xl shadow-lg shadow-[#FB7427]/5 group transition-all active:scale-[0.98]" disabled={loading}>
+                                {loading ? "Signing in..." : (
                                     <span className="flex items-center gap-2">
-                                        Authorize Entry <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                        Sign in <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                     </span>
                                 )}
                             </Button>
 
                             <div className="text-center pt-4">
-                                <Link href="/register" className="text-[10px] font-bold text-gray-500 hover:text-[#17ad96] uppercase tracking-[0.2em] transition-colors">
-                                    New Pilot or Commander? Enlist Here
+                                <Link href="/register" className="text-[10px] font-bold text-gray-500 hover:text-[#FB7427] uppercase tracking-[0.2em] transition-colors">
+                                    New here? Create an account
                                 </Link>
                             </div>
                         </form>
@@ -122,30 +122,41 @@ function LoginContent() {
                 </Card>
 
                 {/* Demo Credentials Box */}
-                <div className="p-6 rounded-2xl bg-[#17ad96]/5 border border-[#17ad96]/10 space-y-4">
-                    <h3 className="text-[10px] font-black text-[#17ad96] uppercase tracking-[0.3em]">Demo Protocols (DB Offline Access)</h3>
-                    <div className="grid gap-4 sm:grid-cols-2">
+                <div className="p-6 rounded-2xl bg-[#FB7427]/5 border border-[#FB7427]/10 space-y-4">
+                    <h3 className="text-[10px] font-black text-[#FB7427] uppercase tracking-[0.3em]">Demo accounts</h3>
+                    <div className="grid gap-3 sm:grid-cols-3">
                         <div
-                            className="p-3 rounded-xl bg-black/40 border border-white/5 cursor-pointer hover:border-[#17ad96]/30 transition-all group"
+                            className="p-3 rounded-xl bg-black/40 border border-white/5 cursor-pointer hover:border-[#FB7427]/30 transition-all group"
                             onClick={() => { setEmail("pilot@dronehub.global"); setPassword("demo123") }}
                         >
                             <div className="flex items-center gap-2 mb-1">
-                                <Plane className="w-3 h-3 text-[#17ad96]" />
-                                <span className="text-[9px] font-bold text-white uppercase italic">Pilot Entry</span>
+                                <Plane className="w-3 h-3 text-[#FB7427]" />
+                                <span className="text-[9px] font-bold text-white uppercase">Operator</span>
                             </div>
                             <p className="text-[8px] text-gray-500 font-bold truncate">pilot@dronehub.global</p>
                         </div>
                         <div
-                            className="p-3 rounded-xl bg-black/40 border border-white/5 cursor-pointer hover:border-[#17ad96]/30 transition-all group"
-                            onClick={() => { setEmail("commander@dronehub.global"); setPassword("demo123") }}
+                            className="p-3 rounded-xl bg-black/40 border border-white/5 cursor-pointer hover:border-[#FB7427]/30 transition-all group"
+                            onClick={() => { setEmail("realestate@example.com"); setPassword("demo123") }}
                         >
                             <div className="flex items-center gap-2 mb-1">
-                                <Briefcase className="w-3 h-3 text-[#17ad96]" />
-                                <span className="text-[9px] font-bold text-white uppercase italic">Commander Entry</span>
+                                <Briefcase className="w-3 h-3 text-[#FB7427]" />
+                                <span className="text-[9px] font-bold text-white uppercase">Client</span>
+                            </div>
+                            <p className="text-[8px] text-gray-500 font-bold truncate">realestate@example.com</p>
+                        </div>
+                        <div
+                            className="p-3 rounded-xl bg-black/40 border border-white/5 cursor-pointer hover:border-[#FB7427]/30 transition-all group"
+                            onClick={() => { setEmail("commander@dronehub.global"); setPassword("admin123") }}
+                        >
+                            <div className="flex items-center gap-2 mb-1">
+                                <ShieldCheck className="w-3 h-3 text-[#FB7427]" />
+                                <span className="text-[9px] font-bold text-white uppercase">Admin</span>
                             </div>
                             <p className="text-[8px] text-gray-500 font-bold truncate">commander@dronehub.global</p>
                         </div>
                     </div>
+                    <p className="text-[8px] text-gray-600 font-bold">Demo logins for testing. Click to fill, then sign in.</p>
                 </div>
             </div>
         </div>
@@ -154,7 +165,7 @@ function LoginContent() {
 
 export default function LoginPage() {
     return (
-        <Suspense fallback={<div className="min-h-screen bg-[#0a0d11] flex items-center justify-center"><div className="text-[#17ad96] font-bold tracking-widest uppercase text-sm animate-pulse">Initializing Secure Uplink...</div></div>}>
+        <Suspense fallback={<div className="min-h-screen bg-[#0f1722] flex items-center justify-center"><div className="text-[#FB7427] font-bold tracking-widest uppercase text-sm animate-pulse">Loading...</div></div>}>
             <LoginContent />
         </Suspense>
     )

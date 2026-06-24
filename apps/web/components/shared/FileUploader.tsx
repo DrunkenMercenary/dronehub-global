@@ -55,25 +55,25 @@ export function FileUploader({ onUpload, label, acceptedTypes }: FileUploaderPro
 
     return (
         <div className="space-y-4">
-            <div className="flex flex-col items-center justify-center border-2 border-dashed border-white/10 rounded-2xl p-8 bg-black/20 hover:border-[#17ad96]/30 transition-all group">
+            <div className="flex flex-col items-center justify-center border-2 border-dashed border-white/10 rounded-2xl p-8 bg-black/20 hover:border-[#FB7427]/30 transition-all group">
                 {status === "success" ? (
                     <div className="flex flex-col items-center gap-4 py-4 animate-in fade-in zoom-in duration-300">
                         <div className="h-16 w-16 rounded-full bg-green-500/20 flex items-center justify-center border border-green-500/30">
                             <CheckCircle className="w-8 h-8 text-green-400" />
                         </div>
-                        <p className="text-sm font-black text-white uppercase italic tracking-tighter">Transmission Complete</p>
+                        <p className="text-sm font-black text-white uppercase italic tracking-tighter">Upload complete</p>
                         <Button
                             variant="link"
                             onClick={() => setStatus("idle")}
-                            className="text-[#17ad96] text-[10px] font-bold uppercase tracking-widest"
+                            className="text-[#FB7427] text-[10px] font-bold uppercase tracking-widest"
                         >
-                            Upload Another File
+                            Upload another
                         </Button>
                     </div>
                 ) : (
                     <>
-                        <div className="h-14 w-14 rounded-xl bg-[#17ad96]/10 flex items-center justify-center border border-[#17ad96]/20 group-hover:scale-110 transition-transform mb-4">
-                            <FileText className="w-6 h-6 text-[#17ad96]" />
+                        <div className="h-14 w-14 rounded-xl bg-[#FB7427]/10 flex items-center justify-center border border-[#FB7427]/20 group-hover:scale-110 transition-transform mb-4">
+                            <FileText className="w-6 h-6 text-[#FB7427]" />
                         </div>
                         <div className="text-center space-y-1 mb-6">
                             <p className="text-sm font-bold text-white uppercase tracking-tighter italic">{label}</p>
@@ -91,14 +91,14 @@ export function FileUploader({ onUpload, label, acceptedTypes }: FileUploaderPro
                             htmlFor="file-upload"
                             className="cursor-pointer bg-white/5 hover:bg-white/10 px-6 py-3 rounded-lg text-white text-xs font-black uppercase tracking-widest transition-colors mb-4 border border-white/5"
                         >
-                            {file ? file.name : "Select Dispatch Files"}
+                            {file ? file.name : "Choose a file"}
                         </label>
 
                         {file && (
                             <Button
                                 onClick={handleUpload}
                                 disabled={uploading}
-                                className="bg-[#17ad96] hover:bg-[#159a85] text-[#0a0d11] font-black uppercase tracking-tighter w-full h-12 shadow-lg shadow-[#17ad96]/10"
+                                className="bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-black uppercase tracking-tighter w-full h-12 shadow-lg shadow-[#FB7427]/10"
                             >
                                 {uploading ? (
                                     <>
@@ -106,7 +106,7 @@ export function FileUploader({ onUpload, label, acceptedTypes }: FileUploaderPro
                                     </>
                                 ) : (
                                     <>
-                                        <Upload className="w-4 h-4 mr-2" /> Start Transmission
+                                        <Upload className="w-4 h-4 mr-2" /> Upload
                                     </>
                                 )}
                             </Button>
