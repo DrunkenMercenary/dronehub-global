@@ -3,6 +3,8 @@
 # ---- Base ----
 FROM node:20-alpine AS base
 WORKDIR /app
+# OpenSSL is required by Prisma's query engine at build and runtime
+RUN apk add --no-cache openssl libc6-compat
 
 # ---- Dependencies ----
 FROM base AS deps
