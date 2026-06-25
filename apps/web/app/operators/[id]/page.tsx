@@ -46,9 +46,11 @@ export default async function OperatorProfilePage({ params }: { params: Promise<
                             <div className="space-y-2">
                                 <div className="flex items-center gap-3 flex-wrap">
                                     <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">{displayName}</h1>
-                                    <span className="flex items-center gap-1 text-[10px] font-bold text-[#FB7427] uppercase tracking-widest bg-[#FB7427]/10 border border-[#FB7427]/20 px-2.5 py-1 rounded-full">
-                                        <ShieldCheck className="w-3 h-3" /> Verified
-                                    </span>
+                                    {op.verified && (
+                                        <span className="flex items-center gap-1 text-[10px] font-bold text-[#FB7427] uppercase tracking-widest bg-[#FB7427]/10 border border-[#FB7427]/20 px-2.5 py-1 rounded-full">
+                                            <ShieldCheck className="w-3 h-3" /> Verified
+                                        </span>
+                                    )}
                                     <SaveButton operatorId={op.id} initialSaved={savedIds.includes(op.id)} />
                                 </div>
                                 <p className="text-[11px] font-bold text-gray-500 uppercase tracking-widest">
