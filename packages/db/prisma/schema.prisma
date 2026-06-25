@@ -92,6 +92,13 @@ model OperatorProfile {
   lat         Float?
   lng         Float?
 
+  // Subscription / tier. plan is the source of truth for gating (FREE | PRO).
+  // Stripe fields stay null until billing is switched on.
+  plan                 String    @default("FREE")
+  planSince            DateTime?
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+
   documents Document[]
   proposals Proposal[]
   threads   Thread[]
