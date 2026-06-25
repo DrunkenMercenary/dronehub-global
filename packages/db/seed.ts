@@ -64,6 +64,8 @@ async function main() {
                     name: "Alpha Flight",
                     description: "High-end cinematic and structural specialists.",
                     status: "APPROVED",
+                    plan: "PRO",
+                    planSince: new Date(),
                     services: "videography,surveying,inspection",
                     radius: 100,
                     lat: 40.7128,
