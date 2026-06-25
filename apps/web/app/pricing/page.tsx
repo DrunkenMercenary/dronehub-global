@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button"
 import { Check, ArrowRight } from "lucide-react"
 
 const PLANS = [
-    { name: "Customer", price: "Free", tagline: "Post jobs and hire operators", accent: "#FB7427", features: ["Unlimited job posts", "Receive unlimited proposals", "In-app messaging", "Verified operators only", "Ratings & reviews"], cta: "Post a job", href: "/register/client" },
-    { name: "Operator", price: "Free", tagline: "Find work and grow your reputation", accent: "#5BC2E7", features: ["Public verified profile", "Job feed matched to your services", "Send proposals", "Portfolio & documents", "Build your rating"], cta: "Join as operator", href: "/register/operator", featured: true },
+    { name: "Customer", price: "Free", tagline: "Post jobs and hire operators", accent: "#5BC2E7", features: ["Unlimited job posts", "Receive unlimited proposals", "In-app messaging", "Verified operators only", "Ratings & reviews"], cta: "Post a job", href: "/register/client" },
+    { name: "Operator", price: "Free", tagline: "Find work and grow your reputation", accent: "#FB7427", features: ["Public verified profile", "Job feed matched to your services", "Send proposals", "Portfolio & documents", "Build your rating"], cta: "Join as operator", href: "/register/operator", featured: true },
 ]
 
 export default function PricingPage() {
@@ -17,7 +17,7 @@ export default function PricingPage() {
                 </div>
                 <div className="grid gap-6 md:grid-cols-2 max-w-3xl mx-auto">
                     {PLANS.map((p) => (
-                        <div key={p.name} className={`p-8 rounded-3xl bg-[#18222e] border ${p.featured ? "border-[#5BC2E7]/40" : "border-white/5"} space-y-6`}>
+                        <div key={p.name} className={`p-8 rounded-3xl bg-[#18222e] border ${p.featured ? "border-[#FB7427]/40" : "border-white/5"} space-y-6`}>
                             <div className="space-y-1">
                                 <p className="text-sm font-bold uppercase tracking-widest" style={{ color: p.accent }}>{p.name}</p>
                                 <p className="text-4xl font-black text-white">{p.price}</p>

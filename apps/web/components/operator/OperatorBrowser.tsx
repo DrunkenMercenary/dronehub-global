@@ -33,14 +33,14 @@ export function OperatorBrowser({ operators, savedIds = [] }: { operators: Publi
                         placeholder="Search by name, company, or keyword"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
-                        className="bg-[#18222e] border-white/5 h-12 pl-11 text-white placeholder:text-gray-600 focus:border-[#5BC2E7]/50 rounded-xl"
+                        className="bg-[#18222e] border-white/5 h-12 pl-11 text-white placeholder:text-gray-600 focus:border-[#FB7427]/50 rounded-xl"
                     />
                 </div>
                 <div className="flex flex-wrap gap-2">
                     <button
                         onClick={() => setCategory(null)}
                         className={`px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest border transition-all ${category === null
-                            ? "bg-[#5BC2E7]/15 text-[#5BC2E7] border-[#5BC2E7]/40"
+                            ? "bg-[#FB7427]/15 text-[#FB7427] border-[#FB7427]/40"
                             : "bg-[#18222e] text-gray-400 border-white/5 hover:border-white/15"}`}
                     >
                         All services
@@ -50,7 +50,7 @@ export function OperatorBrowser({ operators, savedIds = [] }: { operators: Publi
                             key={c.id}
                             onClick={() => setCategory(c.id)}
                             className={`px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest border transition-all ${category === c.id
-                                ? "bg-[#5BC2E7]/15 text-[#5BC2E7] border-[#5BC2E7]/40"
+                                ? "bg-[#FB7427]/15 text-[#FB7427] border-[#FB7427]/40"
                                 : "bg-[#18222e] text-gray-400 border-white/5 hover:border-white/15"}`}
                         >
                             {c.label}
@@ -75,14 +75,14 @@ export function OperatorBrowser({ operators, savedIds = [] }: { operators: Publi
                         const isCompany = op.type === "COMPANY"
                         return (
                             <Link key={op.id} href={`/operators/${op.id}`} className="group">
-                                <div className="h-full p-6 rounded-2xl bg-[#18222e] border border-white/5 hover:border-[#5BC2E7]/40 transition-all duration-300 flex flex-col">
+                                <div className="h-full p-6 rounded-2xl bg-[#18222e] border border-white/5 hover:border-[#FB7427]/40 transition-all duration-300 flex flex-col">
                                     <div className="flex items-start justify-between gap-3 mb-4">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-12 h-12 rounded-xl bg-[#5BC2E7]/10 border border-[#5BC2E7]/20 flex items-center justify-center text-[#5BC2E7]">
+                                            <div className="w-12 h-12 rounded-xl bg-[#FB7427]/10 border border-[#FB7427]/20 flex items-center justify-center text-[#FB7427]">
                                                 {isCompany ? <Building className="w-6 h-6" /> : <User className="w-6 h-6" />}
                                             </div>
                                             <div>
-                                                <h3 className="text-base font-bold text-white leading-tight group-hover:text-[#5BC2E7] transition-colors">
+                                                <h3 className="text-base font-bold text-white leading-tight group-hover:text-[#FB7427] transition-colors">
                                                     {isCompany && op.companyName ? op.companyName : op.name}
                                                 </h3>
                                                 <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
@@ -92,7 +92,7 @@ export function OperatorBrowser({ operators, savedIds = [] }: { operators: Publi
                                         </div>
                                         <div className="flex flex-col items-end gap-2 shrink-0">
                                             <SaveButton operatorId={op.id} initialSaved={savedIds.includes(op.id)} />
-                                            <span className="flex items-center gap-1 text-[9px] font-bold text-[#5BC2E7] uppercase tracking-widest">
+                                            <span className="flex items-center gap-1 text-[9px] font-bold text-[#FB7427] uppercase tracking-widest">
                                                 <ShieldCheck className="w-3 h-3" /> Verified
                                             </span>
                                         </div>
@@ -112,9 +112,9 @@ export function OperatorBrowser({ operators, savedIds = [] }: { operators: Publi
                                     </div>
                                     <div className="mt-auto flex items-center justify-between pt-4 border-t border-white/5">
                                         <span className="flex items-center gap-1.5 text-[10px] font-bold text-gray-500 uppercase tracking-widest">
-                                            {op.radius ? (<><MapPin className="w-3 h-3 text-[#5BC2E7]" /> {op.radius} km range</>) : "Service area on request"}
+                                            {op.radius ? (<><MapPin className="w-3 h-3 text-[#FB7427]" /> {op.radius} km range</>) : "Service area on request"}
                                         </span>
-                                        <ArrowUpRight className="w-4 h-4 text-gray-600 group-hover:text-[#5BC2E7] transition-colors" />
+                                        <ArrowUpRight className="w-4 h-4 text-gray-600 group-hover:text-[#FB7427] transition-colors" />
                                     </div>
                                 </div>
                             </Link>

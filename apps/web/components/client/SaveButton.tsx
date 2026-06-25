@@ -26,9 +26,9 @@ export function SaveButton({ operatorId, initialSaved = false }: { operatorId: s
         <button
             onClick={toggle}
             aria-label={saved ? "Remove from saved" : "Save operator"}
-            className="w-9 h-9 rounded-lg flex items-center justify-center bg-white/5 border border-white/5 hover:border-[#FB7427]/40 transition-all"
+            className="w-9 h-9 rounded-lg flex items-center justify-center bg-white/5 border border-white/5 hover:border-[#5BC2E7]/40 transition-all"
         >
-            <Heart className={`w-4 h-4 ${saved ? "fill-[#FB7427] text-[#FB7427]" : "text-gray-400"}`} />
+            <Heart className={`w-4 h-4 ${saved ? "fill-[#5BC2E7] text-[#5BC2E7]" : "text-gray-400"}`} />
         </button>
     )
 }

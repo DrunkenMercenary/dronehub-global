@@ -33,16 +33,16 @@ export default async function AdminDashboardPage() {
             value: stats.users.total,
             sub: `${stats.users.operators} Pilots / ${stats.users.clients} COMMANDERS`,
             icon: Users,
-            color: "text-[#FB7427]",
-            bg: "bg-[#FB7427]/10"
+            color: "text-[#5BC2E7]",
+            bg: "bg-[#5BC2E7]/10"
         },
         {
             label: "Total value",
             value: stats.jobs.total,
             sub: `${stats.jobs.open} ACTIVE SORTIES`,
             icon: Briefcase,
-            color: "text-[#5BC2E7]",
-            bg: "bg-[#5BC2E7]/10"
+            color: "text-[#FB7427]",
+            bg: "bg-[#FB7427]/10"
         },
         {
             label: "Platform Revenue",
@@ -61,12 +61,12 @@ export default async function AdminDashboardPage() {
                 {/* Header */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-16">
                     <div className="space-y-4">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FB7427]/10 border border-[#FB7427]/20">
-                            <ShieldCheck className="w-3.5 h-3.5 text-[#FB7427]" />
-                            <span className="text-[10px] font-bold text-[#FB7427] uppercase tracking-[0.2em]">HQ Command</span>
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#5BC2E7]/10 border border-[#5BC2E7]/20">
+                            <ShieldCheck className="w-3.5 h-3.5 text-[#5BC2E7]" />
+                            <span className="text-[10px] font-bold text-[#5BC2E7] uppercase tracking-[0.2em]">HQ Command</span>
                         </div>
                         <h1 className="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter">
-                            Global <span className="text-[#FB7427]">Operations</span>
+                            Global <span className="text-[#5BC2E7]">Operations</span>
                         </h1>
                         <p className="text-gray-500 font-medium text-lg leading-relaxed max-w-xl">
                             Real-time platform intelligence and mission control.
@@ -75,7 +75,7 @@ export default async function AdminDashboardPage() {
 
                     <div className="flex gap-4">
                         <Link href="/admin/operators">
-                            <Button className="bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-black uppercase tracking-tighter h-12 px-8 rounded-xl flex items-center gap-2 group transition-all">
+                            <Button className="bg-[#5BC2E7] hover:bg-[#3aa9d4] text-[#0f1722] font-black uppercase tracking-tighter h-12 px-8 rounded-xl flex items-center gap-2 group transition-all">
                                 Review Queue <UserPlus className="w-4 h-4 group-hover:scale-110 transition-transform" />
                             </Button>
                         </Link>
@@ -105,7 +105,7 @@ export default async function AdminDashboardPage() {
                 <div className="grid gap-12 lg:grid-cols-3">
                     <div className="lg:col-span-2 space-y-8">
                         <div className="flex items-center gap-4">
-                            <Activity className="w-5 h-5 text-[#FB7427]" />
+                            <Activity className="w-5 h-5 text-[#5BC2E7]" />
                             <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter">System Pulse</h2>
                         </div>
 
@@ -127,8 +127,8 @@ export default async function AdminDashboardPage() {
                                         <tr key={i} className="hover:bg-white/[0.02] transition-colors group">
                                             <td className="px-6 py-4 text-sm font-bold text-white uppercase italic tracking-tight">{row.op}</td>
                                             <td className="px-6 py-4">
-                                                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#FB7427]/10 text-[#FB7427] text-[9px] font-black uppercase tracking-widest border border-[#FB7427]/20">
-                                                    <div className="w-1 h-1 rounded-full bg-[#FB7427] animate-pulse"></div>
+                                                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#5BC2E7]/10 text-[#5BC2E7] text-[9px] font-black uppercase tracking-widest border border-[#5BC2E7]/20">
+                                                    <div className="w-1 h-1 rounded-full bg-[#5BC2E7] animate-pulse"></div>
                                                     {row.status}
                                                 </span>
                                             </td>
@@ -142,7 +142,7 @@ export default async function AdminDashboardPage() {
 
                     <div className="space-y-8">
                         <div className="flex items-center gap-4">
-                            <LayoutDashboard className="w-5 h-5 text-[#5BC2E7]" />
+                            <LayoutDashboard className="w-5 h-5 text-[#FB7427]" />
                             <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter">Quick Access</h2>
                         </div>
 
@@ -153,12 +153,12 @@ export default async function AdminDashboardPage() {
                                 { label: "Platform Settings", sub: "Global environment config", href: "#" },
                             ].map((link, i) => (
                                 <Link key={i} href={link.href} className="group">
-                                    <div className="p-6 rounded-2xl bg-[#18222e] border border-white/5 group-hover:border-[#FB7427]/30 transition-all flex justify-between items-center">
+                                    <div className="p-6 rounded-2xl bg-[#18222e] border border-white/5 group-hover:border-[#5BC2E7]/30 transition-all flex justify-between items-center">
                                         <div className="space-y-1">
                                             <p className="text-sm font-black text-white italic uppercase tracking-tight">{link.label}</p>
                                             <p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">{link.sub}</p>
                                         </div>
-                                        <ArrowUpRight className="w-5 h-5 text-gray-700 group-hover:text-[#FB7427] transition-colors" />
+                                        <ArrowUpRight className="w-5 h-5 text-gray-700 group-hover:text-[#5BC2E7] transition-colors" />
                                     </div>
                                 </Link>
                             ))}

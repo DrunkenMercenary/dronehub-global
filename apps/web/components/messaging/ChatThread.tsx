@@ -69,17 +69,17 @@ export function ChatThread({ threadId, currentUserId, initialMessages }: ChatThr
             {/* Chat Header */}
             <div className="p-6 border-b border-white/5 bg-black/20 flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-[#FB7427]/10 flex items-center justify-center border border-[#FB7427]/20">
-                        <Zap className="w-5 h-5 text-[#FB7427]" />
+                    <div className="w-10 h-10 rounded-xl bg-[#5BC2E7]/10 flex items-center justify-center border border-[#5BC2E7]/20">
+                        <Zap className="w-5 h-5 text-[#5BC2E7]" />
                     </div>
                     <div>
                         <h3 className="text-sm font-black text-white uppercase italic tracking-tighter">Messages</h3>
                         <p className="text-[9px] font-bold text-gray-500 uppercase tracking-widest">Messages about this job</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#FB7427]/10 border border-[#FB7427]/20">
-                    <ShieldCheck className="w-3 h-3 text-[#FB7427]" />
-                    <span className="text-[8px] font-bold text-[#FB7427] uppercase tracking-[0.2em]">Connected</span>
+                <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#5BC2E7]/10 border border-[#5BC2E7]/20">
+                    <ShieldCheck className="w-3 h-3 text-[#5BC2E7]" />
+                    <span className="text-[8px] font-bold text-[#5BC2E7] uppercase tracking-[0.2em]">Connected</span>
                 </div>
             </div>
 
@@ -102,7 +102,7 @@ export function ChatThread({ threadId, currentUserId, initialMessages }: ChatThr
                             <div key={msg.id} className={`flex ${isMe ? "justify-end" : "justify-start"}`}>
                                 <div className={`max-w-[80%] space-y-1.5 ${isMe ? "items-end text-right" : "items-start text-left"}`}>
                                     <div className={`p-4 rounded-2xl text-sm font-medium leading-relaxed ${isMe
-                                        ? "bg-[#FB7427] text-[#0f1722] rounded-tr-none shadow-lg shadow-[#FB7427]/10"
+                                        ? "bg-[#5BC2E7] text-[#0f1722] rounded-tr-none shadow-lg shadow-[#5BC2E7]/10"
                                         : "bg-white/5 text-gray-300 border border-white/5 rounded-tl-none"
                                         }`}>
                                         {msg.content}
@@ -127,12 +127,12 @@ export function ChatThread({ threadId, currentUserId, initialMessages }: ChatThr
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         placeholder="Type a message..."
-                        className="bg-[#0f1722] border-white/5 h-14 text-white font-medium placeholder:text-gray-700 focus:border-[#FB7427]/50 rounded-xl"
+                        className="bg-[#0f1722] border-white/5 h-14 text-white font-medium placeholder:text-gray-700 focus:border-[#5BC2E7]/50 rounded-xl"
                     />
                     <Button
                         type="submit"
                         disabled={!input.trim() || isSending}
-                        className="h-14 w-14 bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] rounded-xl shadow-xl shadow-[#FB7427]/10 flex items-center justify-center shrink-0 transition-transform active:scale-95"
+                        className="h-14 w-14 bg-[#5BC2E7] hover:bg-[#3aa9d4] text-[#0f1722] rounded-xl shadow-xl shadow-[#5BC2E7]/10 flex items-center justify-center shrink-0 transition-transform active:scale-95"
                     >
                         <Send className="w-5 h-5" />
                     </Button>

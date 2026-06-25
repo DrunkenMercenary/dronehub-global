@@ -47,12 +47,12 @@ export default function HowItWorksPage() {
                     <p className="text-gray-400 text-lg">A simple, transparent way to connect drone work with the operators who can do it.</p>
                 </div>
                 <div className="grid gap-12 lg:grid-cols-2 max-w-5xl mx-auto">
-                    <Column title="For customers" accent="#FB7427" steps={CLIENT_STEPS} />
-                    <Column title="For operators" accent="#5BC2E7" steps={OPERATOR_STEPS} />
+                    <Column title="For customers" accent="#5BC2E7" steps={CLIENT_STEPS} />
+                    <Column title="For operators" accent="#FB7427" steps={OPERATOR_STEPS} />
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center mt-16">
-                    <Link href="/register/client"><Button className="bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-bold h-14 px-8 rounded-xl">Post a job <ArrowRight className="ml-1 w-4 h-4" /></Button></Link>
-                    <Link href="/register/operator"><Button variant="outline" className="border-2 border-[#5BC2E7]/40 text-[#5BC2E7] hover:bg-[#5BC2E7]/10 hover:border-[#5BC2E7] font-bold h-14 px-8 rounded-xl">Join as operator</Button></Link>
+                    <Link href="/register/client"><Button className="bg-[#5BC2E7] hover:bg-[#3aa9d4] text-[#0f1722] font-bold h-14 px-8 rounded-xl">Post a job <ArrowRight className="ml-1 w-4 h-4" /></Button></Link>
+                    <Link href="/register/operator"><Button variant="outline" className="border-2 border-[#FB7427]/40 text-[#FB7427] hover:bg-[#FB7427]/10 hover:border-[#FB7427] font-bold h-14 px-8 rounded-xl">Join as operator</Button></Link>
                 </div>
             </div>
         </div>

@@ -11,12 +11,12 @@ export default async function RegulationsPage() {
         <div className="min-h-screen bg-[#0f1722] py-16 md:py-24">
             <div className="container px-4 md:px-6">
                 <div className="space-y-4 mb-8 max-w-2xl">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#5BC2E7]/10 border border-[#5BC2E7]/20">
-                        <Scale className="w-3.5 h-3.5 text-[#5BC2E7]" />
-                        <span className="text-[10px] font-bold text-[#5BC2E7] uppercase tracking-[0.2em]">Compliance</span>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FB7427]/10 border border-[#FB7427]/20">
+                        <Scale className="w-3.5 h-3.5 text-[#FB7427]" />
+                        <span className="text-[10px] font-bold text-[#FB7427] uppercase tracking-[0.2em]">Compliance</span>
                     </div>
                     <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight leading-none">
-                        Drone <span className="text-[#5BC2E7]">regulations</span>
+                        Drone <span className="text-[#FB7427]">regulations</span>
                     </h1>
                     <p className="text-gray-400 text-lg font-medium">
                         Quick reference for drone rules across the region. Check the basics before you post or accept a job.

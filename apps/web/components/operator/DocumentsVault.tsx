@@ -38,7 +38,7 @@ export function DocumentsVault({
                 return (
                     <div key={slot.type} className="p-6 rounded-2xl bg-[#18222e] border border-white/5 space-y-5">
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-[#5BC2E7]/10 border border-[#5BC2E7]/20 flex items-center justify-center text-[#5BC2E7]">
+                            <div className="w-10 h-10 rounded-xl bg-[#FB7427]/10 border border-[#FB7427]/20 flex items-center justify-center text-[#FB7427]">
                                 <slot.icon className="w-5 h-5" />
                             </div>
                             <div>
@@ -55,13 +55,13 @@ export function DocumentsVault({
                                         href={d.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex items-center justify-between gap-3 p-3 rounded-xl bg-black/30 border border-white/5 hover:border-[#5BC2E7]/30 transition-all group"
+                                        className="flex items-center justify-between gap-3 p-3 rounded-xl bg-black/30 border border-white/5 hover:border-[#FB7427]/30 transition-all group"
                                     >
                                         <span className="flex items-center gap-3 min-w-0">
-                                            <FileText className="w-4 h-4 text-[#5BC2E7] shrink-0" />
+                                            <FileText className="w-4 h-4 text-[#FB7427] shrink-0" />
                                             <span className="text-sm text-gray-300 truncate">{d.name}</span>
                                         </span>
-                                        <ArrowUpRight className="w-4 h-4 text-gray-600 group-hover:text-[#5BC2E7] transition-colors shrink-0" />
+                                        <ArrowUpRight className="w-4 h-4 text-gray-600 group-hover:text-[#FB7427] transition-colors shrink-0" />
                                     </a>
                                 ))}
                             </div>

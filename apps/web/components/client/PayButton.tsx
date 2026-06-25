@@ -25,7 +25,7 @@ export function PayButton({ jobId, amount }: { jobId: string; amount: number }) 
 
     return (
         <div className="space-y-2">
-            <Button onClick={pay} disabled={loading} className="bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-bold h-12 px-6 rounded-xl">
+            <Button onClick={pay} disabled={loading} className="bg-[#5BC2E7] hover:bg-[#3aa9d4] text-[#0f1722] font-bold h-12 px-6 rounded-xl">
                 <CreditCard className="w-4 h-4 mr-2" /> {loading ? "Redirecting to checkout..." : `Pay $${amount.toLocaleString()}`}
             </Button>
             {error && <p className="text-xs font-bold text-red-400">{error}</p>}

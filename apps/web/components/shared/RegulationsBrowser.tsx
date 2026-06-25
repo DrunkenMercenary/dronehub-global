@@ -32,17 +32,17 @@ export function RegulationsBrowser({ regulations }: { regulations: Regulation[] 
                         placeholder="Search rules by country, topic, or keyword"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
-                        className="bg-[#18222e] border-white/5 h-12 pl-11 text-white placeholder:text-gray-600 focus:border-[#5BC2E7]/50 rounded-xl"
+                        className="bg-[#18222e] border-white/5 h-12 pl-11 text-white placeholder:text-gray-600 focus:border-[#FB7427]/50 rounded-xl"
                     />
                 </div>
                 <div className="flex flex-wrap gap-2">
                     <button onClick={() => setCountry(null)}
-                        className={`px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest border transition-all ${country === null ? "bg-[#5BC2E7]/15 text-[#5BC2E7] border-[#5BC2E7]/40" : "bg-[#18222e] text-gray-400 border-white/5 hover:border-white/15"}`}>
+                        className={`px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest border transition-all ${country === null ? "bg-[#FB7427]/15 text-[#FB7427] border-[#FB7427]/40" : "bg-[#18222e] text-gray-400 border-white/5 hover:border-white/15"}`}>
                         All countries
                     </button>
                     {countries.map((c) => (
                         <button key={c} onClick={() => setCountry(c)}
-                            className={`px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest border transition-all ${country === c ? "bg-[#5BC2E7]/15 text-[#5BC2E7] border-[#5BC2E7]/40" : "bg-[#18222e] text-gray-400 border-white/5 hover:border-white/15"}`}>
+                            className={`px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest border transition-all ${country === c ? "bg-[#FB7427]/15 text-[#FB7427] border-[#FB7427]/40" : "bg-[#18222e] text-gray-400 border-white/5 hover:border-white/15"}`}>
                             {c}
                         </button>
                     ))}
@@ -58,7 +58,7 @@ export function RegulationsBrowser({ regulations }: { regulations: Regulation[] 
                     {filtered.map((r) => (
                         <div key={r.id} className="p-6 rounded-2xl bg-[#18222e] border border-white/5 space-y-3 flex flex-col">
                             <div className="flex items-center gap-2 flex-wrap">
-                                <span className="flex items-center gap-1.5 text-[10px] font-bold text-[#5BC2E7] uppercase tracking-widest bg-[#5BC2E7]/10 border border-[#5BC2E7]/20 px-2.5 py-1 rounded-full">
+                                <span className="flex items-center gap-1.5 text-[10px] font-bold text-[#FB7427] uppercase tracking-widest bg-[#FB7427]/10 border border-[#FB7427]/20 px-2.5 py-1 rounded-full">
                                     <MapPin className="w-3 h-3" /> {r.country}
                                 </span>
                                 <span className="flex items-center gap-1.5 text-[10px] font-bold text-gray-400 uppercase tracking-widest bg-white/5 border border-white/5 px-2.5 py-1 rounded-full">
@@ -70,7 +70,7 @@ export function RegulationsBrowser({ regulations }: { regulations: Regulation[] 
                             <div className="flex items-center justify-between pt-2 border-t border-white/5">
                                 <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">{r.authority}</span>
                                 {r.sourceUrl && (
-                                    <a href={r.sourceUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-[10px] font-bold text-[#5BC2E7] uppercase tracking-widest hover:underline">
+                                    <a href={r.sourceUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-[10px] font-bold text-[#FB7427] uppercase tracking-widest hover:underline">
                                         Official site <ExternalLink className="w-3 h-3" />
                                     </a>
                                 )}

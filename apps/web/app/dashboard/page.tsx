@@ -53,9 +53,9 @@ export default async function OperatorDashboard() {
             : { label: "Pending review", cls: "bg-amber-500/20 text-amber-400 border-amber-500/30" }
 
     const stats = [
-        { label: "Active Proposals", value: proposals.filter(p => p.status === "PENDING").length.toString(), icon: FileText, color: "text-[#FB7427]" },
-        { label: "Jobs awarded", value: proposals.filter(p => p.status === "ACCEPTED").length.toString(), icon: CheckCircle, color: "text-[#5BC2E7]" },
-        { label: "Verification", value: vstatus.label, icon: ShieldCheck, color: "text-[#5BC2E7]" },
+        { label: "Active Proposals", value: proposals.filter(p => p.status === "PENDING").length.toString(), icon: FileText, color: "text-[#5BC2E7]" },
+        { label: "Jobs awarded", value: proposals.filter(p => p.status === "ACCEPTED").length.toString(), icon: CheckCircle, color: "text-[#FB7427]" },
+        { label: "Verification", value: vstatus.label, icon: ShieldCheck, color: "text-[#FB7427]" },
         { label: (profile as any)?.type === "COMPANY" ? "Fleet Size" : "Pilot Rank", value: (profile as any)?.type === "COMPANY" ? ((profile as any).fleetSize || 1).toString() : "Ace", icon: (profile as any)?.type === "COMPANY" ? Users : User, color: "text-purple-400" },
     ]
 
@@ -67,13 +67,13 @@ export default async function OperatorDashboard() {
                 {/* Profile Header */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
                     <div className="space-y-4">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FB7427]/10 border border-[#FB7427]/20">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#5BC2E7]/10 border border-[#5BC2E7]/20">
                             {(profile as any)?.type === "COMPANY" ? (
-                                <Building className="w-3.5 h-3.5 text-[#FB7427]" />
+                                <Building className="w-3.5 h-3.5 text-[#5BC2E7]" />
                             ) : (
-                                <User className="w-3.5 h-3.5 text-[#FB7427]" />
+                                <User className="w-3.5 h-3.5 text-[#5BC2E7]" />
                             )}
-                            <span className="text-[10px] font-bold text-[#FB7427] uppercase tracking-[0.2em]">
+                            <span className="text-[10px] font-bold text-[#5BC2E7] uppercase tracking-[0.2em]">
                                 {(profile as any)?.type === "COMPANY" ? "Licensed Carrier" : "Independent Pilot"}
                             </span>
                         </div>
@@ -113,7 +113,7 @@ export default async function OperatorDashboard() {
                                 <p className="text-gray-500 text-sm font-medium">Jobs matching your services.</p>
                             </div>
                             <Link href="/jobs">
-                                <Button variant="outline" className="border-white/10 text-white hover:bg-[#FB7427] hover:text-[#0f1722] hover:border-[#FB7427] font-bold rounded-xl">
+                                <Button variant="outline" className="border-white/10 text-white hover:bg-[#5BC2E7] hover:text-[#0f1722] hover:border-[#5BC2E7] font-bold rounded-xl">
                                     <Search className="mr-2 w-4 h-4" /> Browse All
                                 </Button>
                             </Link>
@@ -152,7 +152,7 @@ export default async function OperatorDashboard() {
                                     : `${documents.length} document${documents.length === 1 ? "" : "s"} on file.`}
                             </p>
                             <Link href="/dashboard/documents">
-                                <Button className="w-full bg-[#5BC2E7] hover:bg-[#3aa9d4] text-[#0f1722] font-bold rounded-xl">
+                                <Button className="w-full bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-bold rounded-xl">
                                     <FileCheck2 className="mr-2 w-4 h-4" /> Manage documents
                                 </Button>
                             </Link>
@@ -171,8 +171,8 @@ export default async function OperatorDashboard() {
                                 ].map((action, i) => (
                                     <Link key={i} href={action.href}>
                                         <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 border border-transparent hover:border-white/5 transition-all group">
-                                            <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-[#FB7427]/10 transition-colors">
-                                                <action.icon className="w-4 h-4 text-gray-400 group-hover:text-[#FB7427] transition-colors" />
+                                            <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-[#5BC2E7]/10 transition-colors">
+                                                <action.icon className="w-4 h-4 text-gray-400 group-hover:text-[#5BC2E7] transition-colors" />
                                             </div>
                                             <span className="text-sm font-bold text-gray-300 group-hover:text-white transition-colors">{action.label}</span>
                                         </div>

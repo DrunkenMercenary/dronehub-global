@@ -23,7 +23,7 @@ export default async function NotificationsPage() {
         <div className="min-h-screen bg-[#0f1722] py-16 md:py-24">
             <div className="container max-w-3xl px-4 md:px-6">
                 <div className="flex items-center gap-3 mb-10">
-                    <Bell className="w-6 h-6 text-[#FB7427]" />
+                    <Bell className="w-6 h-6 text-[#5BC2E7]" />
                     <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Notifications</h1>
                 </div>
 
@@ -37,8 +37,8 @@ export default async function NotificationsPage() {
                         {notifications.map((n) => {
                             const Icon = ICONS[n.type] || Bell
                             const inner = (
-                                <div className={`p-5 rounded-2xl border flex items-start gap-4 transition-all ${n.read ? "bg-[#18222e] border-white/5" : "bg-[#FB7427]/5 border-[#FB7427]/20"}`}>
-                                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${n.read ? "bg-white/5 text-gray-400" : "bg-[#FB7427]/15 text-[#FB7427]"}`}>
+                                <div className={`p-5 rounded-2xl border flex items-start gap-4 transition-all ${n.read ? "bg-[#18222e] border-white/5" : "bg-[#5BC2E7]/5 border-[#5BC2E7]/20"}`}>
+                                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${n.read ? "bg-white/5 text-gray-400" : "bg-[#5BC2E7]/15 text-[#5BC2E7]"}`}>
                                         <Icon className="w-5 h-5" />
                                     </div>
                                     <div className="min-w-0 flex-1">

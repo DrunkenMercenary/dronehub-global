@@ -33,20 +33,20 @@ export default async function OperatorProfilePage({ params }: { params: Promise<
     return (
         <div className="min-h-screen bg-[#0f1722] py-16 md:py-24">
             <div className="container max-w-5xl px-4 md:px-6">
-                <Link href="/operators" className="inline-flex items-center gap-2 text-gray-500 hover:text-[#5BC2E7] transition-colors text-[10px] font-bold uppercase tracking-widest mb-8">
+                <Link href="/operators" className="inline-flex items-center gap-2 text-gray-500 hover:text-[#FB7427] transition-colors text-[10px] font-bold uppercase tracking-widest mb-8">
                     <ArrowLeft className="w-3.5 h-3.5" /> Back to operators
                 </Link>
 
                 <div className="grid gap-10 lg:grid-cols-3">
                     <div className="lg:col-span-2 space-y-10">
                         <div className="flex items-start gap-6">
-                            <div className="w-20 h-20 rounded-2xl bg-[#5BC2E7]/10 border border-[#5BC2E7]/20 flex items-center justify-center text-[#5BC2E7] shrink-0">
+                            <div className="w-20 h-20 rounded-2xl bg-[#FB7427]/10 border border-[#FB7427]/20 flex items-center justify-center text-[#FB7427] shrink-0">
                                 {isCompany ? <Building className="w-10 h-10" /> : <User className="w-10 h-10" />}
                             </div>
                             <div className="space-y-2">
                                 <div className="flex items-center gap-3 flex-wrap">
                                     <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">{displayName}</h1>
-                                    <span className="flex items-center gap-1 text-[10px] font-bold text-[#5BC2E7] uppercase tracking-widest bg-[#5BC2E7]/10 border border-[#5BC2E7]/20 px-2.5 py-1 rounded-full">
+                                    <span className="flex items-center gap-1 text-[10px] font-bold text-[#FB7427] uppercase tracking-widest bg-[#FB7427]/10 border border-[#FB7427]/20 px-2.5 py-1 rounded-full">
                                         <ShieldCheck className="w-3 h-3" /> Verified
                                     </span>
                                     <SaveButton operatorId={op.id} initialSaved={savedIds.includes(op.id)} />
@@ -72,7 +72,7 @@ export default async function OperatorProfilePage({ params }: { params: Promise<
                             <div className="flex flex-wrap gap-2">
                                 {services.map((s) => (
                                     <span key={s} className="flex items-center gap-2 text-sm font-medium text-white bg-[#18222e] border border-white/5 px-4 py-2 rounded-xl">
-                                        <CheckCircle className="w-4 h-4 text-[#5BC2E7]" /> {labelForCategory(s)}
+                                        <CheckCircle className="w-4 h-4 text-[#FB7427]" /> {labelForCategory(s)}
                                     </span>
                                 ))}
                             </div>
@@ -103,7 +103,7 @@ export default async function OperatorProfilePage({ params }: { params: Promise<
                                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                                     {portfolio.map((d: any) => (
                                         <a key={d.id} href={d.url} target="_blank" rel="noopener noreferrer"
-                                            className="aspect-square rounded-xl overflow-hidden bg-black/30 border border-white/5 hover:border-[#5BC2E7]/40 transition-all">
+                                            className="aspect-square rounded-xl overflow-hidden bg-black/30 border border-white/5 hover:border-[#FB7427]/40 transition-all">
                                             {/* eslint-disable-next-line @next/next/no-img-element */}
                                             <img src={d.url} alt={d.name} className="w-full h-full object-cover" />
                                         </a>
@@ -138,20 +138,20 @@ export default async function OperatorProfilePage({ params }: { params: Promise<
                     <div className="space-y-6">
                         <div className="p-6 rounded-2xl bg-[#18222e] border border-white/5 space-y-5">
                             <div className="flex items-center justify-between">
-                                <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2"><Briefcase className="w-3.5 h-3.5 text-[#5BC2E7]" /> Jobs completed</span>
+                                <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2"><Briefcase className="w-3.5 h-3.5 text-[#FB7427]" /> Jobs completed</span>
                                 <span className="text-lg font-bold text-white">{op.jobsCompleted}</span>
                             </div>
                             <div className="flex items-center justify-between">
-                                <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2"><MapPin className="w-3.5 h-3.5 text-[#5BC2E7]" /> Service range</span>
+                                <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2"><MapPin className="w-3.5 h-3.5 text-[#FB7427]" /> Service range</span>
                                 <span className="text-lg font-bold text-white">{op.radius ? `${op.radius} km` : "On request"}</span>
                             </div>
                         </div>
 
-                        <div className="p-6 rounded-2xl bg-[#5BC2E7]/5 border border-[#5BC2E7]/15 space-y-4">
+                        <div className="p-6 rounded-2xl bg-[#FB7427]/5 border border-[#FB7427]/15 space-y-4">
                             <h3 className="text-sm font-bold text-white">Need this kind of work?</h3>
                             <p className="text-xs text-gray-400 leading-relaxed">Post a job and verified operators like {displayName} can send you a quote.</p>
                             <Link href="/jobs/new" className="block">
-                                <Button className="w-full bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-bold h-12 rounded-xl">
+                                <Button className="w-full bg-[#5BC2E7] hover:bg-[#3aa9d4] text-[#0f1722] font-bold h-12 rounded-xl">
                                     Post a job <ArrowRight className="ml-1 w-4 h-4" />
                                 </Button>
                             </Link>

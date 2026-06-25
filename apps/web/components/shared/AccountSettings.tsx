@@ -49,7 +49,7 @@ export function AccountSettings({ account }: { account: { email: string | null; 
                     <Input value={account.email || ""} disabled className="bg-[#0f1722]/50 border-white/5 h-12 text-gray-500 rounded-xl" />
                 </div>
                 {nameMsg && <p className={`text-xs font-bold ${nameMsg.ok ? "text-green-400" : "text-red-400"}`}>{nameMsg.text}</p>}
-                <Button onClick={saveName} disabled={nameLoading} className="bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-bold h-11 px-6 rounded-xl">{nameLoading ? "Saving..." : "Save changes"}</Button>
+                <Button onClick={saveName} disabled={nameLoading} className="bg-[#5BC2E7] hover:bg-[#3aa9d4] text-[#0f1722] font-bold h-11 px-6 rounded-xl">{nameLoading ? "Saving..." : "Save changes"}</Button>
             </div>
 
             {account.hasPassword && (
@@ -64,7 +64,7 @@ export function AccountSettings({ account }: { account: { email: string | null; 
                         <Input type="password" value={next} onChange={(e) => setNext(e.target.value)} className="bg-[#0f1722] border-white/5 h-12 text-white rounded-xl" />
                     </div>
                     {pwMsg && <p className={`text-xs font-bold ${pwMsg.ok ? "text-green-400" : "text-red-400"}`}>{pwMsg.text}</p>}
-                    <Button onClick={savePassword} disabled={pwLoading} className="bg-[#5BC2E7] hover:bg-[#3aa9d4] text-[#0f1722] font-bold h-11 px-6 rounded-xl">{pwLoading ? "Updating..." : "Update password"}</Button>
+                    <Button onClick={savePassword} disabled={pwLoading} className="bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-bold h-11 px-6 rounded-xl">{pwLoading ? "Updating..." : "Update password"}</Button>
                 </div>
             )}
         </div>

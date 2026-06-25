@@ -20,7 +20,7 @@ export function StarRating({
                 {[1, 2, 3, 4, 5].map((i) => (
                     <Star
                         key={i}
-                        className={`${s} ${i <= Math.round(v) ? "text-[#FB7427] fill-[#FB7427]" : "text-gray-600"}`}
+                        className={`${s} ${i <= Math.round(v) ? "text-[#5BC2E7] fill-[#5BC2E7]" : "text-gray-600"}`}
                     />
                 ))}
             </div>

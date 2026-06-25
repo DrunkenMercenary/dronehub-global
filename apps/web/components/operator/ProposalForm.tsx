@@ -74,12 +74,12 @@ export function ProposalForm({ jobId, operatorId }: ProposalFormProps) {
                 <div className="flex items-center justify-between gap-4">
                     <div className="space-y-1">
                         <h2 className="text-2xl font-black text-white italic uppercase tracking-tighter flex items-center gap-3">
-                            <Zap className="w-6 h-6 text-[#FB7427]" /> Submit your proposal
+                            <Zap className="w-6 h-6 text-[#5BC2E7]" /> Submit your proposal
                         </h2>
                         <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest">Verified operator</p>
                     </div>
                     <div className="h-px flex-1 bg-white/5 mx-4 hidden md:block"></div>
-                    <div className="flex items-center gap-1.5 text-[9px] font-black text-[#FB7427] uppercase tracking-[0.2em] px-3 py-1 bg-[#FB7427]/10 rounded-full border border-[#FB7427]/20">
+                    <div className="flex items-center gap-1.5 text-[9px] font-black text-[#5BC2E7] uppercase tracking-[0.2em] px-3 py-1 bg-[#5BC2E7]/10 rounded-full border border-[#5BC2E7]/20">
                         <ShieldCheck className="w-3 h-3" /> 
                     </div>
                 </div>
@@ -97,7 +97,7 @@ export function ProposalForm({ jobId, operatorId }: ProposalFormProps) {
                         render={({ field }) => (
                             <FormItem className="space-y-3">
                                 <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[9px] flex items-center gap-2">
-                                    <DollarSign className="w-3.5 h-3.5 text-[#FB7427]" /> Your price (USD)
+                                    <DollarSign className="w-3.5 h-3.5 text-[#5BC2E7]" /> Your price (USD)
                                 </FormLabel>
                                 <FormControl>
                                     <div className="relative group">
@@ -105,9 +105,9 @@ export function ProposalForm({ jobId, operatorId }: ProposalFormProps) {
                                             type="number"
                                             placeholder="500"
                                             {...field}
-                                            className="bg-[#0f1722] border-white/5 h-14 text-white text-lg font-bold placeholder:text-gray-700 focus:border-[#FB7427]/50 rounded-xl transition-all pl-10"
+                                            className="bg-[#0f1722] border-white/5 h-14 text-white text-lg font-bold placeholder:text-gray-700 focus:border-[#5BC2E7]/50 rounded-xl transition-all pl-10"
                                         />
-                                        <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-700 group-focus-within:text-[#FB7427] transition-colors" />
+                                        <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-700 group-focus-within:text-[#5BC2E7] transition-colors" />
                                     </div>
                                 </FormControl>
                                 <FormMessage />
@@ -120,16 +120,16 @@ export function ProposalForm({ jobId, operatorId }: ProposalFormProps) {
                         render={({ field }) => (
                             <FormItem className="space-y-3">
                                 <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[9px] flex items-center gap-2">
-                                    <Clock className="w-3.5 h-3.5 text-[#FB7427]" /> Delivery time
+                                    <Clock className="w-3.5 h-3.5 text-[#5BC2E7]" /> Delivery time
                                 </FormLabel>
                                 <FormControl>
                                     <div className="relative group">
                                         <Input
                                             placeholder="e.g. 72 Hours"
                                             {...field}
-                                            className="bg-[#0f1722] border-white/5 h-14 text-white text-lg font-bold placeholder:text-gray-700 focus:border-[#FB7427]/50 rounded-xl transition-all pl-10"
+                                            className="bg-[#0f1722] border-white/5 h-14 text-white text-lg font-bold placeholder:text-gray-700 focus:border-[#5BC2E7]/50 rounded-xl transition-all pl-10"
                                         />
-                                        <Clock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-700 group-focus-within:text-[#FB7427] transition-colors" />
+                                        <Clock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-700 group-focus-within:text-[#5BC2E7] transition-colors" />
                                     </div>
                                 </FormControl>
                                 <FormMessage />
@@ -144,12 +144,12 @@ export function ProposalForm({ jobId, operatorId }: ProposalFormProps) {
                     render={({ field }) => (
                         <FormItem className="space-y-3">
                             <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[9px] flex items-center gap-2">
-                                <MessageSquare className="w-3.5 h-3.5 text-[#FB7427]" /> Cover note
+                                <MessageSquare className="w-3.5 h-3.5 text-[#5BC2E7]" /> Cover note
                             </FormLabel>
                             <FormControl>
                                 <Textarea
                                     placeholder="Briefly describe your relevant experience and equipment..."
-                                    className="resize-none bg-[#0f1722] border-white/5 min-h-[160px] text-white font-medium placeholder:text-gray-700 focus:border-[#FB7427]/50 rounded-2xl transition-all p-6"
+                                    className="resize-none bg-[#0f1722] border-white/5 min-h-[160px] text-white font-medium placeholder:text-gray-700 focus:border-[#5BC2E7]/50 rounded-2xl transition-all p-6"
                                     {...field}
                                 />
                             </FormControl>
@@ -160,7 +160,7 @@ export function ProposalForm({ jobId, operatorId }: ProposalFormProps) {
 
                 <Button
                     type="submit"
-                    className="w-full bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-black uppercase tracking-tighter h-16 text-xl rounded-2xl shadow-xl shadow-[#FB7427]/10 group transition-all active:scale-[0.98] mt-4 flex items-center justify-center gap-3"
+                    className="w-full bg-[#5BC2E7] hover:bg-[#3aa9d4] text-[#0f1722] font-black uppercase tracking-tighter h-16 text-xl rounded-2xl shadow-xl shadow-[#5BC2E7]/10 group transition-all active:scale-[0.98] mt-4 flex items-center justify-center gap-3"
                     disabled={loading}
                 >
                     {loading ? "Submitting..." : (

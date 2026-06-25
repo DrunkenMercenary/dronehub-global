@@ -32,7 +32,7 @@ export function PortfolioManager({
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                     {items.map((d) => (
                         <a key={d.id} href={d.url} target="_blank" rel="noopener noreferrer"
-                            className="aspect-square rounded-xl overflow-hidden bg-black/30 border border-white/5 hover:border-[#5BC2E7]/40 transition-all flex items-center justify-center">
+                            className="aspect-square rounded-xl overflow-hidden bg-black/30 border border-white/5 hover:border-[#FB7427]/40 transition-all flex items-center justify-center">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img src={d.url} alt={d.name} className="w-full h-full object-cover" />
                         </a>

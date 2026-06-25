@@ -8,12 +8,12 @@ export default function RegisterSuccessPage() {
         <div className="min-h-screen bg-[#0f1722] flex items-center justify-center">
             <div className="text-center space-y-6 max-w-md px-4">
                 <div className="flex justify-center">
-                    <div className="w-20 h-20 rounded-2xl bg-[#FB7427]/10 border border-[#FB7427]/20 flex items-center justify-center">
-                        <CheckCircle2 className="h-10 w-10 text-[#FB7427]" />
+                    <div className="w-20 h-20 rounded-2xl bg-[#5BC2E7]/10 border border-[#5BC2E7]/20 flex items-center justify-center">
+                        <CheckCircle2 className="h-10 w-10 text-[#5BC2E7]" />
                     </div>
                 </div>
                 <h1 className="text-3xl font-black text-white uppercase italic tracking-tighter">
-                    Registration <span className="text-[#FB7427]">Complete</span>
+                    Registration <span className="text-[#5BC2E7]">Complete</span>
                 </h1>
                 <p className="text-gray-400 font-medium leading-relaxed">
                     Your account has been created successfully. If you registered as an operator,
@@ -21,7 +21,7 @@ export default function RegisterSuccessPage() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 pt-2 justify-center">
                     <Link href="/login">
-                        <Button className="bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-black uppercase tracking-tighter px-8 h-12 rounded-xl shadow-xl shadow-[#FB7427]/10 transition-all active:scale-95">
+                        <Button className="bg-[#5BC2E7] hover:bg-[#3aa9d4] text-[#0f1722] font-black uppercase tracking-tighter px-8 h-12 rounded-xl shadow-xl shadow-[#5BC2E7]/10 transition-all active:scale-95">
                             Login Now
                         </Button>
                     </Link>

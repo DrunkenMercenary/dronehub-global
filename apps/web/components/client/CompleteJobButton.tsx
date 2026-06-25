@@ -28,7 +28,7 @@ export function CompleteJobButton({ jobId }: { jobId: string }) {
             <Button
                 onClick={onClick}
                 disabled={loading}
-                className="bg-[#5BC2E7] hover:bg-[#3aa9d4] text-[#0f1722] font-bold h-12 px-6 rounded-xl"
+                className="bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-bold h-12 px-6 rounded-xl"
             >
                 <CheckCircle className="w-4 h-4 mr-2" /> {loading ? "Updating..." : "Mark as completed"}
             </Button>

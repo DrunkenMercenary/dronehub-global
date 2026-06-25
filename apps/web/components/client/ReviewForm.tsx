@@ -46,7 +46,7 @@ export function ReviewForm({ jobId }: { jobId: string }) {
                         className="transition-transform hover:scale-110"
                         aria-label={`${i} star${i > 1 ? "s" : ""}`}
                     >
-                        <Star className={`w-8 h-8 ${i <= (hover || rating) ? "text-[#FB7427] fill-[#FB7427]" : "text-gray-600"}`} />
+                        <Star className={`w-8 h-8 ${i <= (hover || rating) ? "text-[#5BC2E7] fill-[#5BC2E7]" : "text-gray-600"}`} />
                     </button>
                 ))}
             </div>
@@ -54,12 +54,12 @@ export function ReviewForm({ jobId }: { jobId: string }) {
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 placeholder="Share a few words about the work (optional)"
-                className="bg-[#0f1722] border-white/5 min-h-[100px] text-white placeholder:text-gray-600 focus:border-[#FB7427]/50 rounded-xl resize-none"
+                className="bg-[#0f1722] border-white/5 min-h-[100px] text-white placeholder:text-gray-600 focus:border-[#5BC2E7]/50 rounded-xl resize-none"
             />
             <Button
                 onClick={submit}
                 disabled={loading}
-                className="bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-bold h-12 px-8 rounded-xl"
+                className="bg-[#5BC2E7] hover:bg-[#3aa9d4] text-[#0f1722] font-bold h-12 px-8 rounded-xl"
             >
                 {loading ? "Submitting..." : "Submit review"}
             </Button>

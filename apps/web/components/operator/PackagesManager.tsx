@@ -63,7 +63,7 @@ export function PackagesManager({ packages }: { packages: Pkg[] }) {
                     </div>
                 </div>
                 <div className="flex gap-3">
-                    <Button onClick={submit} disabled={loading} className="bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-bold h-11 px-6 rounded-xl">
+                    <Button onClick={submit} disabled={loading} className="bg-[#5BC2E7] hover:bg-[#3aa9d4] text-[#0f1722] font-bold h-11 px-6 rounded-xl">
                         <Plus className="w-4 h-4 mr-1" /> {loading ? "Saving..." : editingId ? "Save changes" : "Add package"}
                     </Button>
                     {editingId && <Button onClick={reset} variant="outline" className="border-white/10 text-white h-11 rounded-xl">Cancel</Button>}

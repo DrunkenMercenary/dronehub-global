@@ -15,7 +15,7 @@ export function OrderPackageButton({ packageId }: { packageId: string }) {
     const [error, setError] = useState("")
 
     if (!session?.user?.email) {
-        return <Link href="/login" className="block"><Button className="w-full bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-bold h-11 rounded-xl">Sign in to order</Button></Link>
+        return <Link href="/login" className="block"><Button className="w-full bg-[#5BC2E7] hover:bg-[#3aa9d4] text-[#0f1722] font-bold h-11 rounded-xl">Sign in to order</Button></Link>
     }
     if (session.user.role !== "CLIENT") {
         return <p className="text-[11px] text-gray-500 text-center">Sign in as a customer to order</p>
@@ -30,7 +30,7 @@ export function OrderPackageButton({ packageId }: { packageId: string }) {
 
     return (
         <div className="space-y-2">
-            <Button onClick={order} disabled={loading} className="w-full bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-bold h-11 rounded-xl">
+            <Button onClick={order} disabled={loading} className="w-full bg-[#5BC2E7] hover:bg-[#3aa9d4] text-[#0f1722] font-bold h-11 rounded-xl">
                 {loading ? "Placing order..." : <>Order now <ArrowRight className="ml-1 w-4 h-4" /></>}
             </Button>
             {error && <p className="text-[11px] font-bold text-red-400 text-center">{error}</p>}

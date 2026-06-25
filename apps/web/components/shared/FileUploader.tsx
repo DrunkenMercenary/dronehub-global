@@ -55,7 +55,7 @@ export function FileUploader({ onUpload, label, acceptedTypes }: FileUploaderPro
 
     return (
         <div className="space-y-4">
-            <div className="flex flex-col items-center justify-center border-2 border-dashed border-white/10 rounded-2xl p-8 bg-black/20 hover:border-[#FB7427]/30 transition-all group">
+            <div className="flex flex-col items-center justify-center border-2 border-dashed border-white/10 rounded-2xl p-8 bg-black/20 hover:border-[#5BC2E7]/30 transition-all group">
                 {status === "success" ? (
                     <div className="flex flex-col items-center gap-4 py-4 animate-in fade-in zoom-in duration-300">
                         <div className="h-16 w-16 rounded-full bg-green-500/20 flex items-center justify-center border border-green-500/30">
@@ -65,15 +65,15 @@ export function FileUploader({ onUpload, label, acceptedTypes }: FileUploaderPro
                         <Button
                             variant="link"
                             onClick={() => setStatus("idle")}
-                            className="text-[#FB7427] text-[10px] font-bold uppercase tracking-widest"
+                            className="text-[#5BC2E7] text-[10px] font-bold uppercase tracking-widest"
                         >
                             Upload another
                         </Button>
                     </div>
                 ) : (
                     <>
-                        <div className="h-14 w-14 rounded-xl bg-[#FB7427]/10 flex items-center justify-center border border-[#FB7427]/20 group-hover:scale-110 transition-transform mb-4">
-                            <FileText className="w-6 h-6 text-[#FB7427]" />
+                        <div className="h-14 w-14 rounded-xl bg-[#5BC2E7]/10 flex items-center justify-center border border-[#5BC2E7]/20 group-hover:scale-110 transition-transform mb-4">
+                            <FileText className="w-6 h-6 text-[#5BC2E7]" />
                         </div>
                         <div className="text-center space-y-1 mb-6">
                             <p className="text-sm font-bold text-white uppercase tracking-tighter italic">{label}</p>
@@ -98,7 +98,7 @@ export function FileUploader({ onUpload, label, acceptedTypes }: FileUploaderPro
                             <Button
                                 onClick={handleUpload}
                                 disabled={uploading}
-                                className="bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-black uppercase tracking-tighter w-full h-12 shadow-lg shadow-[#FB7427]/10"
+                                className="bg-[#5BC2E7] hover:bg-[#3aa9d4] text-[#0f1722] font-black uppercase tracking-tighter w-full h-12 shadow-lg shadow-[#5BC2E7]/10"
                             >
                                 {uploading ? (
                                     <>

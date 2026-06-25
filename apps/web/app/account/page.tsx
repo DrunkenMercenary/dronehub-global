@@ -17,7 +17,7 @@ export default async function AccountPage() {
         <div className="min-h-screen bg-[#0f1722] py-16 md:py-24">
             <div className="container px-4 md:px-6">
                 <div className="flex items-center gap-3 mb-10">
-                    <Settings className="w-6 h-6 text-[#FB7427]" />
+                    <Settings className="w-6 h-6 text-[#5BC2E7]" />
                     <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Account settings</h1>
                 </div>
                 <AccountSettings account={account} />

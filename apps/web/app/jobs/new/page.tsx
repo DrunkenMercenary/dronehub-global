@@ -86,12 +86,12 @@ export default function NewJobPage() {
 
                 {/* Header */}
                 <div className="space-y-4 mb-12">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FB7427]/10 border border-[#FB7427]/20">
-                        <Briefcase className="w-3.5 h-3.5 text-[#FB7427]" />
-                        <span className="text-[10px] font-bold text-[#FB7427] uppercase tracking-[0.2em]">New job</span>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#5BC2E7]/10 border border-[#5BC2E7]/20">
+                        <Briefcase className="w-3.5 h-3.5 text-[#5BC2E7]" />
+                        <span className="text-[10px] font-bold text-[#5BC2E7] uppercase tracking-[0.2em]">New job</span>
                     </div>
                     <h1 className="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter leading-none">
-                        Post a <span className="text-[#FB7427]">New job</span>
+                        Post a <span className="text-[#5BC2E7]">New job</span>
                     </h1>
                     <p className="text-gray-500 font-medium text-lg max-w-xl">
                         Describe your job and receive proposals from verified drone operators.
@@ -101,7 +101,7 @@ export default function NewJobPage() {
                 {/* Form Card */}
                 <div className="p-10 rounded-3xl bg-[#18222e] border border-white/5 relative overflow-hidden">
                     {/* Background glow */}
-                    <div className="absolute top-0 right-0 w-80 h-80 bg-[#FB7427]/5 blur-3xl rounded-full translate-x-40 -translate-y-40 pointer-events-none" />
+                    <div className="absolute top-0 right-0 w-80 h-80 bg-[#5BC2E7]/5 blur-3xl rounded-full translate-x-40 -translate-y-40 pointer-events-none" />
 
                     {error && (
                         <div className="mb-8 p-4 text-sm font-bold text-red-400 bg-red-400/10 border border-red-400/20 rounded-xl">
@@ -119,13 +119,13 @@ export default function NewJobPage() {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                            <FileText className="w-3 h-3 text-[#FB7427]" /> Job title
+                                            <FileText className="w-3 h-3 text-[#5BC2E7]" /> Job title
                                         </FormLabel>
                                         <FormControl>
                                             <Input
                                                 placeholder="e.g. Roof Inspection for Residential Building"
                                                 {...field}
-                                                className="bg-[#0f1722] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#FB7427]/50 rounded-xl"
+                                                className="bg-[#0f1722] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#5BC2E7]/50 rounded-xl"
                                             />
                                         </FormControl>
                                         <FormMessage />
@@ -141,11 +141,11 @@ export default function NewJobPage() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                                <Briefcase className="w-3 h-3 text-[#FB7427]" /> Category
+                                                <Briefcase className="w-3 h-3 text-[#5BC2E7]" /> Category
                                             </FormLabel>
                                             <Select onValueChange={field.onChange} value={field.value}>
                                                 <FormControl>
-                                                    <SelectTrigger className="bg-[#0f1722] border-white/5 h-12 text-white rounded-xl focus:border-[#FB7427]/50">
+                                                    <SelectTrigger className="bg-[#0f1722] border-white/5 h-12 text-white rounded-xl focus:border-[#5BC2E7]/50">
                                                         <SelectValue placeholder="Select a category" />
                                                     </SelectTrigger>
                                                 </FormControl>
@@ -154,7 +154,7 @@ export default function NewJobPage() {
                                                         <SelectItem
                                                             key={cat.id}
                                                             value={cat.id}
-                                                            className="focus:bg-[#FB7427]/10 focus:text-[#FB7427]"
+                                                            className="focus:bg-[#5BC2E7]/10 focus:text-[#5BC2E7]"
                                                         >
                                                             {cat.label}
                                                         </SelectItem>
@@ -172,13 +172,13 @@ export default function NewJobPage() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                                <MapPin className="w-3 h-3 text-[#FB7427]" /> Location
+                                                <MapPin className="w-3 h-3 text-[#5BC2E7]" /> Location
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
                                                     placeholder="City or Address"
                                                     {...field}
-                                                    className="bg-[#0f1722] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#FB7427]/50 rounded-xl"
+                                                    className="bg-[#0f1722] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#5BC2E7]/50 rounded-xl"
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -194,12 +194,12 @@ export default function NewJobPage() {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                            <Zap className="w-3 h-3 text-[#FB7427]" /> Job description
+                                            <Zap className="w-3 h-3 text-[#5BC2E7]" /> Job description
                                         </FormLabel>
                                         <FormControl>
                                             <Textarea
                                                 placeholder="Describe the deliverables, timeline, special requirements, airspace restrictions..."
-                                                className="min-h-[160px] bg-[#0f1722] border-white/5 text-white placeholder:text-gray-600 focus:border-[#FB7427]/50 rounded-xl resize-none"
+                                                className="min-h-[160px] bg-[#0f1722] border-white/5 text-white placeholder:text-gray-600 focus:border-[#5BC2E7]/50 rounded-xl resize-none"
                                                 {...field}
                                             />
                                         </FormControl>
@@ -215,7 +215,7 @@ export default function NewJobPage() {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                            <DollarSign className="w-3 h-3 text-[#FB7427]" /> Estimated Budget (Optional)
+                                            <DollarSign className="w-3 h-3 text-[#5BC2E7]" /> Estimated Budget (Optional)
                                         </FormLabel>
                                         <FormControl>
                                             <div className="relative">
@@ -223,7 +223,7 @@ export default function NewJobPage() {
                                                     type="number"
                                                     placeholder="500"
                                                     {...field}
-                                                    className="bg-[#0f1722] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#FB7427]/50 rounded-xl pl-8"
+                                                    className="bg-[#0f1722] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#5BC2E7]/50 rounded-xl pl-8"
                                                 />
                                                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-bold text-sm">$</span>
                                             </div>
@@ -239,7 +239,7 @@ export default function NewJobPage() {
                             <div className="pt-4">
                                 <Button
                                     type="submit"
-                                    className="w-full bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-black uppercase tracking-tighter h-14 text-lg rounded-xl shadow-xl shadow-[#FB7427]/10 transition-all active:scale-[0.98] disabled:opacity-50"
+                                    className="w-full bg-[#5BC2E7] hover:bg-[#3aa9d4] text-[#0f1722] font-black uppercase tracking-tighter h-14 text-lg rounded-xl shadow-xl shadow-[#5BC2E7]/10 transition-all active:scale-[0.98] disabled:opacity-50"
                                     disabled={loading}
                                 >
                                     {loading ? "Posting..." : "Post job"}
