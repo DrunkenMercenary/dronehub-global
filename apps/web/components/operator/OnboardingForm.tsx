@@ -39,6 +39,7 @@ const SERVICE_OPTIONS = [
     { id: "surveying", label: "3D Mapping/LiDAR", icon: "🗺️" },
     { id: "search_rescue", label: "Search & Rescue", icon: "🚁" },
     { id: "agriculture", label: "Precision Ag", icon: "🌾" },
+    { id: "facade_washing", label: "Drone / Facade Washing", icon: "🧼" },
 ]
 
 export function OnboardingForm() {
@@ -194,11 +195,11 @@ export function OnboardingForm() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                        <User className="w-3 h-3 text-[#5BC2E7]" /> {form.watch("type") === "COMPANY" ? "Primary Contact / Lead Pilot" : "Full Name / Call Sign"}
+                                        <User className="w-3 h-3 text-[#5BC2E7]" /> {form.watch("type") === "COMPANY" ? "Main Contact Name" : "Full Name"}
                                     </FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder={form.watch("type") === "COMPANY" ? "Lead Pilot Name" : "e.g. John 'Maverick' Doe"}
+                                            placeholder={form.watch("type") === "COMPANY" ? "e.g. Jane Smith" : "e.g. Jane Smith"}
                                             {...field}
                                             className="bg-[#18222e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#5BC2E7]/50 rounded-xl"
                                         />
@@ -213,7 +214,7 @@ export function OnboardingForm() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                        <Mail className="w-3 h-3 text-[#5BC2E7]" /> Contact Frequency
+                                        <Mail className="w-3 h-3 text-[#5BC2E7]" /> Email Address
                                     </FormLabel>
                                     <FormControl>
                                         <Input
@@ -234,7 +235,7 @@ export function OnboardingForm() {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                    <Lock className="w-3 h-3 text-[#5BC2E7]" /> Security Key
+                                    <Lock className="w-3 h-3 text-[#5BC2E7]" /> Password
                                 </FormLabel>
                                 <FormControl>
                                     <Input

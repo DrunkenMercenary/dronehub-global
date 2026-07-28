@@ -43,6 +43,7 @@ const CATEGORIES = [
     { id: "surveying", label: "Mapping & Surveying" },
     { id: "search_rescue", label: "Search & Rescue" },
     { id: "agriculture", label: "Agriculture" },
+    { id: "facade_washing", label: "Drone / Facade Washing" },
 ]
 
 
