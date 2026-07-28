@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { normaliseCategory, parseServices } from "@/lib/categories"
+import { sessionEmail } from "@/lib/session"
 
 // Schema for Job Creation
 const jobSchema = z.object({
@@ -18,7 +19,9 @@ const jobSchema = z.object({
 export type JobFormData = z.infer<typeof jobSchema>
 
 // Server Action: Create Job
-export async function createJob(data: JobFormData, userEmail: string) {
+// The userEmail argument is retained for signature stability but is no longer
+// trusted: identity is taken from the signed-in session.
+export async function createJob(data: JobFormData, _userEmail?: string) {
     const result = jobSchema.safeParse(data)
 
     if (!result.success) {
@@ -28,8 +31,11 @@ export async function createJob(data: JobFormData, userEmail: string) {
     const { title, description, category, location } = result.data
 
     try {
+        const email = await sessionEmail()
+        if (!email) return { error: "You must be signed in to post a job" }
+
         const user = await prisma.user.findUnique({
-            where: { email: userEmail },
+            where: { email },
             include: { clientProfile: true }
         })
 
@@ -58,10 +64,15 @@ export async function createJob(data: JobFormData, userEmail: string) {
 }
 
 // Server Action: Get Jobs for Operator Feed
-export async function getOperatorFeed(operatorEmail: string) {
+// Identity from session; the argument is ignored so one operator cannot read
+// another's feed by passing their email.
+export async function getOperatorFeed(_operatorEmail?: string) {
     try {
+        const email = await sessionEmail()
+        if (!email) return []
+
         const user = await prisma.user.findUnique({
-            where: { email: operatorEmail },
+            where: { email },
             include: { operatorProfile: true }
         })
 
@@ -98,10 +109,15 @@ export async function getOperatorFeed(operatorEmail: string) {
 }
 
 // Server Action: Get Client's Jobs
-export async function getClientJobs(clientEmail: string) {
+// Identity from session; the argument is ignored so one client cannot read
+// another's jobs by passing their email.
+export async function getClientJobs(_clientEmail?: string) {
     try {
+        const email = await sessionEmail()
+        if (!email) return []
+
         const user = await prisma.user.findUnique({
-            where: { email: clientEmail },
+            where: { email },
             include: { clientProfile: true }
         })
 
@@ -131,10 +147,13 @@ export async function getClientJobs(clientEmail: string) {
 }
 
 // Server Action: Submit Proposal (from job.ts — kept for backward compat)
-export async function submitProposal(jobId: string, price: number, message: string, operatorEmail: string) {
+export async function submitProposal(jobId: string, price: number, message: string, _operatorEmail?: string) {
     try {
+        const email = await sessionEmail()
+        if (!email) return { error: "You must be signed in to submit a proposal" }
+
         const user = await prisma.user.findUnique({
-            where: { email: operatorEmail },
+            where: { email },
             include: { operatorProfile: true }
         })
 

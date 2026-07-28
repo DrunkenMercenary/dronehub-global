@@ -3,8 +3,11 @@
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
 import { revalidatePath } from "next/cache"
+import { sessionEmail } from "@/lib/session"
 
-export async function getAccount(email: string) {
+export async function getAccount(_email?: string) {
+    const email = await sessionEmail()
+    if (!email) return null
     const user = await prisma.user.findUnique({
         where: { email },
         include: { clientProfile: true, operatorProfile: true },
@@ -18,8 +21,10 @@ export async function getAccount(email: string) {
     }
 }
 
-export async function updateDisplayName(email: string, name: string) {
+export async function updateDisplayName(_email: string, name: string) {
     if (!name || name.trim().length < 2) return { error: "Name must be at least 2 characters" }
+    const email = await sessionEmail()
+    if (!email) return { error: "You must be signed in" }
     const user = await prisma.user.findUnique({
         where: { email },
         include: { clientProfile: true, operatorProfile: true },
@@ -33,8 +38,10 @@ export async function updateDisplayName(email: string, name: string) {
     return { success: true }
 }
 
-export async function changePassword(email: string, current: string, next: string) {
+export async function changePassword(_email: string, current: string, next: string) {
     if (!next || next.length < 6) return { error: "New password must be at least 6 characters" }
+    const email = await sessionEmail()
+    if (!email) return { error: "You must be signed in" }
     const user = await prisma.user.findUnique({ where: { email } })
     if (!user || !user.password) return { error: "Password change isn't available for this account" }
     const ok = await bcrypt.compare(current, user.password)

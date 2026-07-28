@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import { notify } from "@/lib/notify"
 import { normaliseCategory } from "@/lib/categories"
+import { sessionUser } from "@/lib/session"
 
 const pkgSchema = z.object({
     title: z.string().min(3, "Title must be at least 3 characters"),
@@ -14,12 +15,14 @@ const pkgSchema = z.object({
     deliveryDays: z.coerce.number().int().min(1, "Delivery must be at least 1 day"),
 })
 
-async function operatorProfile(email: string) {
-    const u = await prisma.user.findUnique({ where: { email }, include: { operatorProfile: true } })
+// Identity from session; any email argument passed by callers is ignored so
+// an operator cannot act on another operator's packages.
+async function operatorProfile(_email?: string) {
+    const u = await sessionUser()
     return u?.operatorProfile
 }
 
-export async function getOperatorPackages(email: string) {
+export async function getOperatorPackages(email?: string) {
     const op = await operatorProfile(email)
     if (!op) return []
     const rows = await prisma.servicePackage.findMany({ where: { operatorId: op.id }, orderBy: { createdAt: "desc" } })
@@ -31,7 +34,7 @@ export async function getPublicPackages(operatorId: string) {
     return rows.map((p) => ({ ...p, price: Number(p.price) }))
 }
 
-export async function createPackage(data: z.infer<typeof pkgSchema>, email: string) {
+export async function createPackage(data: z.infer<typeof pkgSchema>, email?: string) {
     const parsed = pkgSchema.safeParse(data)
     if (!parsed.success) return { error: parsed.error.issues[0].message }
     const op = await operatorProfile(email)
@@ -51,7 +54,7 @@ export async function createPackage(data: z.infer<typeof pkgSchema>, email: stri
     return { success: true }
 }
 
-export async function updatePackage(id: string, data: z.infer<typeof pkgSchema>, email: string) {
+export async function updatePackage(id: string, data: z.infer<typeof pkgSchema>, email?: string) {
     const parsed = pkgSchema.safeParse(data)
     if (!parsed.success) return { error: parsed.error.issues[0].message }
     const op = await operatorProfile(email)
@@ -73,7 +76,7 @@ export async function updatePackage(id: string, data: z.infer<typeof pkgSchema>,
     return { success: true }
 }
 
-export async function togglePackageActive(id: string, email: string) {
+export async function togglePackageActive(id: string, email?: string) {
     const op = await operatorProfile(email)
     if (!op) return { error: "Operator profile not found" }
     const existing = await prisma.servicePackage.findUnique({ where: { id } })
@@ -84,7 +87,7 @@ export async function togglePackageActive(id: string, email: string) {
     return { success: true, active: !existing.active }
 }
 
-export async function deletePackage(id: string, email: string) {
+export async function deletePackage(id: string, email?: string) {
     const op = await operatorProfile(email)
     if (!op) return { error: "Operator profile not found" }
     const existing = await prisma.servicePackage.findUnique({ where: { id } })
@@ -96,8 +99,8 @@ export async function deletePackage(id: string, email: string) {
 }
 
 // Direct order: creates an awarded job + accepted proposal, reusing the whole pipeline.
-export async function orderPackage(packageId: string, email: string) {
-    const u = await prisma.user.findUnique({ where: { email }, include: { clientProfile: true } })
+export async function orderPackage(packageId: string, _email?: string) {
+    const u = await sessionUser()
     if (!u?.clientProfile) return { error: "Only clients can order. Please sign in as a client." }
     const pkg = await prisma.servicePackage.findUnique({
         where: { id: packageId },

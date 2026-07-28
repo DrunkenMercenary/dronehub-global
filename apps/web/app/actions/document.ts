@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { Prisma } from "@prisma/client"
+import { sessionUser } from "@/lib/session"
 
 export async function addDocument(data: {
     url: string,
@@ -12,6 +13,14 @@ export async function addDocument(data: {
     jobId?: string
 }) {
     try {
+        // Must be signed in. If attaching to an operator profile, it must be the
+        // caller's own profile.
+        const actor = await sessionUser()
+        if (!actor) return { error: "You must be signed in" }
+        if (data.operatorProfileId && actor.operatorProfile?.id !== data.operatorProfileId) {
+            return { error: "You can only add documents to your own profile" }
+        }
+
         const createData: Prisma.DocumentCreateInput = {
             url: data.url,
             name: data.name,
@@ -46,10 +55,21 @@ export async function addDocument(data: {
 
 export async function getOperatorDocuments(operatorProfileId: string) {
     try {
+        // Portfolio images are public. Sensitive documents (licence, insurance)
+        // are only returned to the profile's owner or an admin, so passing
+        // another operator's id cannot leak their verification papers.
+        const actor = await sessionUser()
+        const isOwner = actor?.operatorProfile?.id === operatorProfileId
+        const isAdmin = actor?.role === "ADMIN"
+
+        if (isOwner || isAdmin) {
+            return await prisma.document.findMany({
+                where: { operatorProfileId },
+            })
+        }
+
         return await prisma.document.findMany({
-            where: {
-                operatorProfileId: operatorProfileId
-            }
+            where: { operatorProfileId, type: "PORTFOLIO" },
         })
     } catch (error) {
         console.error("Get Documents Error:", error)

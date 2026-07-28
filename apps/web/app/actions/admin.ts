@@ -3,8 +3,17 @@
 import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { notify } from "@/lib/notify"
+import { requireRole } from "@/lib/session"
 
 export async function getAdminStats() {
+    // Admin-only. Identity comes from the session, never from the caller.
+    if (!(await requireRole("ADMIN"))) {
+        return {
+            users: { total: 0, clients: 0, operators: 0 },
+            jobs: { total: 0, open: 0 },
+            volume: 0,
+        }
+    }
     try {
         const [userCount, clientCount, operatorCount, jobCount, activeJobs, totalValue] = await Promise.all([
             prisma.user.count(),
@@ -34,6 +43,7 @@ export async function getAdminStats() {
 }
 
 export async function getPendingOperators() {
+    if (!(await requireRole("ADMIN"))) return []
     try {
         const operators = await prisma.operatorProfile.findMany({
             where: { status: "PENDING" },
@@ -52,6 +62,11 @@ export async function getPendingOperators() {
 }
 
 export async function updateOperatorStatus(operatorId: string, status: "APPROVED" | "REJECTED") {
+    // CRITICAL: only an admin may approve or reject operators. Without this,
+    // any signed-in user could self-approve and gain the verified badge.
+    if (!(await requireRole("ADMIN"))) {
+        return { error: "Not authorised" }
+    }
     try {
         const updated = await prisma.operatorProfile.update({
             where: { id: operatorId },

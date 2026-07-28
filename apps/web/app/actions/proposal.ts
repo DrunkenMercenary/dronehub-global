@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import { notify } from "@/lib/notify"
+import { sessionUser } from "@/lib/session"
 
 const proposalSchema = z.object({
     jobId: z.string(),
@@ -18,6 +19,16 @@ export async function createProposal(data: z.infer<typeof proposalSchema>) {
     try {
         const validated = proposalSchema.parse(data)
 
+        // Identity from session. The operatorId in the payload is untrusted and
+        // must match the signed-in operator, or a user could bid as someone else.
+        const actor = await sessionUser()
+        if (!actor?.operatorProfile) {
+            return { error: "You must be signed in as an operator to submit a proposal" }
+        }
+        if (actor.operatorProfile.id !== validated.operatorId) {
+            return { error: "You can only submit proposals as yourself" }
+        }
+
         // Check if job exists and is open
         const job = await prisma.jobRequest.findUnique({
             where: { id: validated.jobId }
@@ -27,14 +38,7 @@ export async function createProposal(data: z.infer<typeof proposalSchema>) {
             return { error: "Job is no longer open for proposals" }
         }
 
-        // Only approved operators may submit proposals.
-        const operator = await prisma.operatorProfile.findUnique({
-            where: { id: validated.operatorId }
-        })
-
-        if (!operator) {
-            return { error: "Operator profile not found" }
-        }
+        const operator = actor.operatorProfile
 
         if (operator.status !== "APPROVED") {
             return { error: "Your operator profile must be approved before submitting proposals" }
@@ -85,12 +89,11 @@ export async function createProposal(data: z.infer<typeof proposalSchema>) {
 }
 
 // Server Action: Award Proposal
-export async function awardProposal(proposalId: string, clientEmail: string) {
+export async function awardProposal(proposalId: string, _clientEmail?: string) {
     try {
-        const user = await prisma.user.findUnique({
-            where: { email: clientEmail },
-            include: { clientProfile: true }
-        })
+        // Identity from session; the email argument is ignored. The ownership
+        // check below then guarantees only the job's owner can award it.
+        const user = await sessionUser()
 
         if (!user || !user.clientProfile) {
             return { error: "Client profile not found" }
@@ -148,12 +151,9 @@ export async function awardProposal(proposalId: string, clientEmail: string) {
     }
 }
 
-export async function getOperatorProposals(operatorEmail: string) {
+export async function getOperatorProposals(_operatorEmail?: string) {
     try {
-        const user = await prisma.user.findUnique({
-            where: { email: operatorEmail },
-            include: { operatorProfile: true }
-        })
+        const user = await sessionUser()
 
         if (!user || !user.operatorProfile) {
             return []

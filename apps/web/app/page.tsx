@@ -43,8 +43,8 @@ export default function Home() {
                 </Link>
               </div>
               <div className="pt-2">
-                <Link href="#demo" className="text-[#5BC2E7] hover:text-[#5BC2E7] text-sm font-semibold tracking-wide flex items-center gap-2 group transition-colors">
-                  View 90-Second Investor Demo
+                <Link href="/how-it-works" className="text-[#5BC2E7] hover:text-[#5BC2E7] text-sm font-semibold tracking-wide flex items-center gap-2 group transition-colors">
+                  See how it works
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </div>

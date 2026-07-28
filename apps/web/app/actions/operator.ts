@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import bcrypt from "bcryptjs"
 import { notifyAdmins } from "@/lib/notify"
+import { sessionEmail } from "@/lib/session"
 
 const operatorSchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters"),
@@ -111,7 +112,11 @@ export async function onboardOperator(data: OperatorFormData) {
     redirect("/register/success")
 }
 
-export async function getOperatorProfile(email: string) {
+export async function getOperatorProfile(_email?: string) {
+    // Identity from session; the email argument is ignored so one operator
+    // cannot load another operator's private profile record.
+    const email = await sessionEmail()
+    if (!email) return null
     return await prisma.operatorProfile.findFirst({
         where: { user: { email } },
     })

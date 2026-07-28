@@ -1,13 +1,13 @@
 "use client"
 
-import { signIn } from "next-auth/react"
-import { useState, Suspense } from "react"
+import { signIn, getProviders } from "next-auth/react"
+import { useState, useEffect, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
-import { ShieldCheck, Lock, Mail, ArrowRight, Plane, Briefcase } from "lucide-react"
+import { ShieldCheck, Lock, Mail, ArrowRight } from "lucide-react"
 
 function LoginContent() {
     const router = useRouter()
@@ -16,8 +16,15 @@ function LoginContent() {
     const [password, setPassword] = useState("")
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
+    // Only show the Google button when the Google provider is actually
+    // configured (keys present), so there is never a dead button in production.
+    const [googleEnabled, setGoogleEnabled] = useState(false)
 
     const callbackUrl = searchParams.get("callbackUrl") || "/dashboard"
+
+    useEffect(() => {
+        getProviders().then((p) => setGoogleEnabled(!!p?.google)).catch(() => setGoogleEnabled(false))
+    }, [])
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault()
@@ -112,6 +119,30 @@ function LoginContent() {
                                 )}
                             </Button>
 
+                            {googleEnabled && (
+                                <>
+                                    <div className="flex items-center gap-3">
+                                        <div className="h-px flex-1 bg-white/5" />
+                                        <span className="text-[9px] font-bold text-gray-600 uppercase tracking-[0.2em]">or</span>
+                                        <div className="h-px flex-1 bg-white/5" />
+                                    </div>
+
+                                    <Button
+                                        type="button"
+                                        onClick={() => signIn("google", { callbackUrl })}
+                                        className="w-full bg-white hover:bg-gray-100 text-[#0f1722] font-bold h-14 rounded-xl flex items-center justify-center gap-3 transition-all active:scale-[0.98]"
+                                    >
+                                        <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
+                                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z" />
+                                            <path fill="#FBBC05" d="M5.84 14.1a6.6 6.6 0 0 1 0-4.2V7.06H2.18a11 11 0 0 0 0 9.88l3.66-2.84z" />
+                                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1A11 11 0 0 0 2.18 7.06l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z" />
+                                        </svg>
+                                        Continue with Google
+                                    </Button>
+                                </>
+                            )}
+
                             <div className="text-center pt-4">
                                 <Link href="/register" className="text-[10px] font-bold text-gray-500 hover:text-[#5BC2E7] uppercase tracking-[0.2em] transition-colors">
                                     New here? Create an account
@@ -120,44 +151,6 @@ function LoginContent() {
                         </form>
                     </CardContent>
                 </Card>
-
-                {/* Demo Credentials Box */}
-                <div className="p-6 rounded-2xl bg-[#5BC2E7]/5 border border-[#5BC2E7]/10 space-y-4">
-                    <h3 className="text-[10px] font-black text-[#5BC2E7] uppercase tracking-[0.3em]">Demo accounts</h3>
-                    <div className="grid gap-3 sm:grid-cols-3">
-                        <div
-                            className="p-3 rounded-xl bg-black/40 border border-white/5 cursor-pointer hover:border-[#5BC2E7]/30 transition-all group"
-                            onClick={() => { setEmail("pilot@dronehub.global"); setPassword("demo123") }}
-                        >
-                            <div className="flex items-center gap-2 mb-1">
-                                <Plane className="w-3 h-3 text-[#5BC2E7]" />
-                                <span className="text-[9px] font-bold text-white uppercase">Operator</span>
-                            </div>
-                            <p className="text-[8px] text-gray-500 font-bold truncate">pilot@dronehub.global</p>
-                        </div>
-                        <div
-                            className="p-3 rounded-xl bg-black/40 border border-white/5 cursor-pointer hover:border-[#5BC2E7]/30 transition-all group"
-                            onClick={() => { setEmail("realestate@example.com"); setPassword("demo123") }}
-                        >
-                            <div className="flex items-center gap-2 mb-1">
-                                <Briefcase className="w-3 h-3 text-[#5BC2E7]" />
-                                <span className="text-[9px] font-bold text-white uppercase">Client</span>
-                            </div>
-                            <p className="text-[8px] text-gray-500 font-bold truncate">realestate@example.com</p>
-                        </div>
-                        <div
-                            className="p-3 rounded-xl bg-black/40 border border-white/5 cursor-pointer hover:border-[#5BC2E7]/30 transition-all group"
-                            onClick={() => { setEmail("commander@dronehub.global"); setPassword("admin123") }}
-                        >
-                            <div className="flex items-center gap-2 mb-1">
-                                <ShieldCheck className="w-3 h-3 text-[#5BC2E7]" />
-                                <span className="text-[9px] font-bold text-white uppercase">Admin</span>
-                            </div>
-                            <p className="text-[8px] text-gray-500 font-bold truncate">commander@dronehub.global</p>
-                        </div>
-                    </div>
-                    <p className="text-[8px] text-gray-600 font-bold">Demo logins for testing. Click to fill, then sign in.</p>
-                </div>
             </div>
         </div>
     )

@@ -92,9 +92,11 @@ export function OperatorBrowser({ operators, savedIds = [] }: { operators: Publi
                                         </div>
                                         <div className="flex flex-col items-end gap-2 shrink-0">
                                             <SaveButton operatorId={op.id} initialSaved={savedIds.includes(op.id)} />
-                                            <span className="flex items-center gap-1 text-[9px] font-bold text-[#FB7427] uppercase tracking-widest">
-                                                <ShieldCheck className="w-3 h-3" /> Verified
-                                            </span>
+                                            {op.verified && (
+                                                <span className="flex items-center gap-1 text-[9px] font-bold text-[#FB7427] uppercase tracking-widest">
+                                                    <ShieldCheck className="w-3 h-3" /> Verified
+                                                </span>
+                                            )}
                                         </div>
                                     </div>
                                     <div className="mb-3">

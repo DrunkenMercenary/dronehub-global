@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import { notify } from "@/lib/notify"
+import { sessionUser } from "@/lib/session"
 
 const reviewSchema = z.object({
     jobId: z.string(),
@@ -12,12 +13,9 @@ const reviewSchema = z.object({
 })
 
 // Client marks an awarded job as completed (unlocks reviewing).
-export async function completeJob(jobId: string, clientEmail: string) {
+export async function completeJob(jobId: string, _clientEmail?: string) {
     try {
-        const user = await prisma.user.findUnique({
-            where: { email: clientEmail },
-            include: { clientProfile: true },
-        })
+        const user = await sessionUser()
         if (!user?.clientProfile) return { error: "Client profile not found" }
 
         const job = await prisma.jobRequest.findUnique({ where: { id: jobId } })
@@ -48,15 +46,12 @@ export async function completeJob(jobId: string, clientEmail: string) {
 }
 
 // Client leaves a review for the awarded operator on a completed job. One per job.
-export async function createReview(data: z.infer<typeof reviewSchema>, clientEmail: string) {
+export async function createReview(data: z.infer<typeof reviewSchema>, _clientEmail?: string) {
     const parsed = reviewSchema.safeParse(data)
     if (!parsed.success) return { error: parsed.error.issues[0].message }
 
     try {
-        const user = await prisma.user.findUnique({
-            where: { email: clientEmail },
-            include: { clientProfile: true },
-        })
+        const user = await sessionUser()
         if (!user?.clientProfile) return { error: "Client profile not found" }
 
         const job = await prisma.jobRequest.findUnique({

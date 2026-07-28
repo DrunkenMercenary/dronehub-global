@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma"
+import { canShowVerifiedBadge, rankWeight } from "@/lib/tiers"
 
 export type PublicOperator = {
     id: string
@@ -12,11 +13,29 @@ export type PublicOperator = {
     lng: number | null
     ratingAvg: number | null
     ratingCount: number
+    // Paid (Pro) + approved. Drives the verified badge and directory ranking.
+    verified: boolean
 }
 
 const selectFields = {
     id: true, name: true, type: true, companyName: true,
     description: true, services: true, radius: true, lat: true, lng: true,
+    status: true, plan: true,
+}
+
+// Strip internal gating fields (status/plan) and expose only `verified`.
+function toPublic(
+    o: { status: string; plan: string } & Record<string, unknown>,
+    ratingAvg: number | null,
+    ratingCount: number
+): PublicOperator {
+    const { status, plan, ...rest } = o
+    return {
+        ...(rest as Omit<PublicOperator, "ratingAvg" | "ratingCount" | "verified">),
+        ratingAvg,
+        ratingCount,
+        verified: canShowVerifiedBadge({ status, plan }),
+    }
 }
 
 export async function getApprovedOperators(): Promise<PublicOperator[]> {
@@ -32,14 +51,18 @@ export async function getApprovedOperators(): Promise<PublicOperator[]> {
             _count: { rating: true },
         })
         const byId = new Map(grouped.map((g) => [g.operatorId, g]))
-        return operators.map((o) => {
+        const mapped = operators.map((o) => {
             const g = byId.get(o.id)
-            return {
-                ...o,
-                ratingAvg: g?._avg.rating ?? null,
-                ratingCount: g?._count.rating ?? 0,
-            }
+            return toPublic(o, g?._avg.rating ?? null, g?._count.rating ?? 0)
         })
+        // Pro operators rank above Free; stable tie-break keeps name order.
+        return mapped
+            .map((o, i) => ({ o, i }))
+            .sort((a, b) => {
+                const w = rankWeight(b.o.verified ? "PRO" : "FREE") - rankWeight(a.o.verified ? "PRO" : "FREE")
+                return w !== 0 ? w : a.i - b.i
+            })
+            .map(({ o }) => o)
     } catch (e) {
         console.error("getApprovedOperators error:", e)
         return []
@@ -64,10 +87,8 @@ export async function getPublicOperator(
             }),
         ])
         return {
-            ...op,
+            ...toPublic(op, agg._avg.rating ?? null, agg._count.rating ?? 0),
             jobsCompleted,
-            ratingAvg: agg._avg.rating ?? null,
-            ratingCount: agg._count.rating ?? 0,
         }
     } catch (e) {
         console.error("getPublicOperator error:", e)
