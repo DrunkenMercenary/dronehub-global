@@ -374,7 +374,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
                                             <ShieldAlert className="w-8 h-8 text-gray-800" />
                                         </div>
                                         <h3 className="text-xl font-bold text-gray-500 uppercase italic">Awaiting Pilot Responses</h3>
-                                        <p className="text-gray-600 max-w-sm mx-auto text-sm font-medium uppercase tracking-tight">Certified operators are currently analyzing your mission requirements and airspace restrictions.</p>
+                                        <p className="text-gray-600 max-w-sm mx-auto text-sm font-medium uppercase tracking-tight">Operators are reviewing your job. Proposals will appear here as they come in.</p>
                                     </div>
                                 ) : (
                                     <div className="grid gap-6">

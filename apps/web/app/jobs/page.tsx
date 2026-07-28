@@ -33,7 +33,7 @@ export default async function BrowseJobsPage() {
                         </span>
                     </div>
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight">
-                        Find Your Next <span className="text-[#5BC2E7]">Mission</span>
+                        Find Your Next <span className="text-[#5BC2E7]">Job</span>
                     </h1>
                     <p className="text-gray-400 text-lg md:text-xl max-w-2xl leading-relaxed font-medium">
                         Browse through open projects and submit your best proposals to work with clients worldwide.
@@ -61,7 +61,7 @@ export default async function BrowseJobsPage() {
                             <Briefcase className="w-8 h-8 text-gray-800" />
                         </div>
                         <div className="space-y-2">
-                            <h3 className="text-xl font-bold text-gray-400 uppercase italic">No Missions Available</h3>
+                            <h3 className="text-xl font-bold text-gray-400 uppercase italic">No Jobs Available</h3>
                             <p className="text-gray-600 max-w-sm mx-auto text-sm font-medium">
                                 No open missions at the moment. Check back soon for new opportunities.
                             </p>

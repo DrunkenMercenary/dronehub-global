@@ -65,7 +65,7 @@ export default function NewJobPage() {
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         if (!session?.user?.email) {
-            setError("You must be logged in to post a mission.")
+            setError("You must be logged in to post a job.")
             return
         }
 
@@ -75,7 +75,7 @@ export default function NewJobPage() {
             await createJob(values, session.user.email)
         } catch (e) {
             console.error(e)
-            setError("Failed to post mission. Please try again.")
+            setError("Failed to post job. Please try again.")
         } finally {
             setLoading(false)
         }

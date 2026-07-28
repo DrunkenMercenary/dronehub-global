@@ -64,7 +64,7 @@ To deploy a change: commit, then `git push origin main`. Railway builds and rele
 ## Dev workflow notes (important)
 - After ANY database schema change, run `npm run generate` before `npm run dev`, or the app 404s/errors on stale Prisma client
 - Local run: `docker compose up` (or point DATABASE_URL at Neon) -> `npm install` -> `cd packages/db && npx prisma migrate deploy && npx tsx seed.ts` -> `npm run dev`
-- Demo logins (seeded): admin commander@dronehub.global / admin123; operator pilot@dronehub.global / demo123; client realestate@example.com / demo123
+- Demo logins (seeded): see `packages/db/seed.ts` for the seeded accounts. Passwords are NOT recorded here because this repo is public. Production passwords must be rotated away from the seed defaults.
 - Secrets live in `.env` (gitignored), not in the repo. Railway holds the production env vars (DATABASE_URL, NEXTAUTH_URL, NEXTAUTH_SECRET, JWT_SECRET; Stripe keys blank for now)
 
 ## Key docs in this folder

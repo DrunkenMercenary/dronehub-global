@@ -2,6 +2,7 @@
 import { getClientJobs } from "@/app/actions/job"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
+import { prisma } from "@/lib/prisma"
 import { redirect } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -15,6 +16,20 @@ export default async function ClientDashboard() {
 
     if (!session?.user?.email) {
         redirect("/login")
+    }
+
+    // A user who signed in with Google has an account but no profile yet.
+    // Without this they land on an empty dashboard where every action fails
+    // with "Client profile not found". Send them to finish setting up instead.
+    const account = await prisma.user.findUnique({
+        where: { email: session.user.email },
+        select: { clientProfile: { select: { id: true } }, operatorProfile: { select: { id: true } } },
+    })
+    if (!account?.clientProfile && !account?.operatorProfile) {
+        redirect("/register?setup=1")
+    }
+    if (!account?.clientProfile && account?.operatorProfile) {
+        redirect("/dashboard")
     }
 
     const jobs = await getClientJobs(session.user.email)
@@ -37,10 +52,10 @@ export default async function ClientDashboard() {
                             <span className="text-[10px] font-bold text-[#5BC2E7] uppercase tracking-[0.2em]">Client dashboard</span>
                         </div>
                         <h1 className="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter">
-                            Active <span className="text-[#5BC2E7]">Operations</span>
+                            Your <span className="text-[#5BC2E7]">Jobs</span>
                         </h1>
                         <p className="text-gray-500 font-medium text-lg leading-relaxed max-w-xl">
-                            Oversee your fleet, manage mission briefings, and analyze incoming pilot proposals.
+                            Track your posted jobs and review proposals from drone operators.
                         </p>
                     </div>
                     <div className="flex gap-3">
@@ -72,7 +87,7 @@ export default async function ClientDashboard() {
                         <p className="text-3xl font-black text-[#5BC2E7]">{awardedMissions}</p>
                     </div>
                     <div className="p-6 rounded-2xl bg-[#18222e] border border-white/5 space-y-1">
-                        <p className="text-gray-600 text-[10px] font-black uppercase tracking-widest">Open Missions</p>
+                        <p className="text-gray-600 text-[10px] font-black uppercase tracking-widest">Open Jobs</p>
                         <p className="text-3xl font-black text-white">{openMissions}</p>
                     </div>
                 </div>

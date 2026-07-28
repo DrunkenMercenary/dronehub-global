@@ -99,7 +99,7 @@ export function ProposalCard({ proposal, onAward, isAwarding, canAward = true }:
                     >
                         {isAwarding ? "Authorizing Award..." : (
                             <>
-                                Award This Mission <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                                Award This Job <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                             </>
                         )}
                     </Button>

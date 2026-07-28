@@ -29,7 +29,7 @@ export default async function OperatorProposalsPage() {
                             <span className="text-[10px] font-bold text-[#5BC2E7] uppercase tracking-[0.2em]">Pilot Logbook</span>
                         </div>
                         <h1 className="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter">
-                            Mission <span className="text-[#5BC2E7]">Proposals</span>
+                            Your <span className="text-[#5BC2E7]">Proposals</span>
                         </h1>
                         <p className="text-gray-500 font-medium text-lg leading-relaxed max-w-xl">
                             Track your active bids, history, and mission awards.
@@ -50,7 +50,7 @@ export default async function OperatorProposalsPage() {
                             </div>
                             <Link href="/jobs">
                                 <Button className="bg-[#5BC2E7] text-[#0f1722] font-bold hover:bg-[#3aa9d4] transition-all">
-                                    Browse Available Missions
+                                    Browse Available Jobs
                                 </Button>
                             </Link>
                         </div>

@@ -29,25 +29,28 @@ export default async function AdminDashboardPage() {
 
     const kpis = [
         {
-            label: "Total Personnel",
+            label: "Total Users",
             value: stats.users.total,
-            sub: `${stats.users.operators} Pilots / ${stats.users.clients} COMMANDERS`,
+            sub: `${stats.users.operators} operators / ${stats.users.clients} clients`,
             icon: Users,
             color: "text-[#5BC2E7]",
             bg: "bg-[#5BC2E7]/10"
         },
         {
-            label: "Total value",
+            label: "Jobs Posted",
             value: stats.jobs.total,
-            sub: `${stats.jobs.open} ACTIVE SORTIES`,
+            sub: `${stats.jobs.open} currently open`,
             icon: Briefcase,
             color: "text-[#FB7427]",
             bg: "bg-[#FB7427]/10"
         },
         {
-            label: "Platform Revenue",
+            // This is the total value of awarded work passing through the
+            // marketplace, not DroneHub revenue. There is no commission on
+            // jobs, so labelling this "revenue" would be misleading.
+            label: "Awarded Job Value",
             value: `$${stats.volume.toLocaleString()}`,
-            sub: "GROSS TRANSMISSION VALUE",
+            sub: "Total value of awarded work",
             icon: DollarSign,
             color: "text-yellow-400",
             bg: "bg-yellow-400/10"
@@ -63,13 +66,13 @@ export default async function AdminDashboardPage() {
                     <div className="space-y-4">
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#5BC2E7]/10 border border-[#5BC2E7]/20">
                             <ShieldCheck className="w-3.5 h-3.5 text-[#5BC2E7]" />
-                            <span className="text-[10px] font-bold text-[#5BC2E7] uppercase tracking-[0.2em]">HQ Command</span>
+                            <span className="text-[10px] font-bold text-[#5BC2E7] uppercase tracking-[0.2em]">Admin</span>
                         </div>
                         <h1 className="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter">
-                            Global <span className="text-[#5BC2E7]">Operations</span>
+                            Platform <span className="text-[#5BC2E7]">Overview</span>
                         </h1>
                         <p className="text-gray-500 font-medium text-lg leading-relaxed max-w-xl">
-                            Real-time platform intelligence and mission control.
+                            Approve operators and keep an eye on platform activity.
                         </p>
                     </div>
 
@@ -106,23 +109,23 @@ export default async function AdminDashboardPage() {
                     <div className="lg:col-span-2 space-y-8">
                         <div className="flex items-center gap-4">
                             <Activity className="w-5 h-5 text-[#5BC2E7]" />
-                            <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter">System Pulse</h2>
+                            <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter">Platform Activity</h2>
                         </div>
 
                         <div className="p-1 rounded-2xl bg-white/5 border border-white/5 overflow-hidden">
                             <table className="w-full text-left">
                                 <thead className="bg-white/5 border-b border-white/5">
                                     <tr>
-                                        <th className="px-6 py-4 text-[10px] font-black text-gray-500 uppercase tracking-widest">Operation</th>
-                                        <th className="px-6 py-4 text-[10px] font-black text-gray-500 uppercase tracking-widest">Status</th>
-                                        <th className="px-6 py-4 text-[10px] font-black text-gray-500 uppercase tracking-widest">Intel</th>
+                                        <th className="px-6 py-4 text-[10px] font-black text-gray-500 uppercase tracking-widest">Metric</th>
+                                        <th className="px-6 py-4 text-[10px] font-black text-gray-500 uppercase tracking-widest">Count</th>
+                                        <th className="px-6 py-4 text-[10px] font-black text-gray-500 uppercase tracking-widest">Detail</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-white/5">
                                     {[
-                                        { op: "Node Connectivity", status: "Operational", intel: "99.9% Latency Opt" },
-                                        { op: "S3 Burst Storage", status: "Nominal", intel: "1.2 TB / 5 TB Used" },
-                                        { op: "Auth Encryptor", status: "Secure", intel: "AES-256 Validated" },
+                                        { op: "Registered Operators", status: String(stats.users.operators), intel: "Includes pending approval" },
+                                        { op: "Registered Clients", status: String(stats.users.clients), intel: "Accounts able to post jobs" },
+                                        { op: "Open Jobs", status: String(stats.jobs.open), intel: `${stats.jobs.total} posted in total` },
                                     ].map((row, i) => (
                                         <tr key={i} className="hover:bg-white/[0.02] transition-colors group">
                                             <td className="px-6 py-4 text-sm font-bold text-white uppercase italic tracking-tight">{row.op}</td>
@@ -147,20 +150,30 @@ export default async function AdminDashboardPage() {
                         </div>
 
                         <div className="grid gap-4">
-                            {[
-                                { label: "Operator Verification", sub: "Clear the approval queue", href: "/admin/operators" },
-                                { label: "Dispute Arbitration", sub: "Review flagged mission comms", href: "#" },
-                                { label: "Platform Settings", sub: "Global environment config", href: "#" },
-                            ].map((link, i) => (
-                                <Link key={i} href={link.href} className="group">
-                                    <div className="p-6 rounded-2xl bg-[#18222e] border border-white/5 group-hover:border-[#5BC2E7]/30 transition-all flex justify-between items-center">
-                                        <div className="space-y-1">
-                                            <p className="text-sm font-black text-white italic uppercase tracking-tight">{link.label}</p>
-                                            <p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">{link.sub}</p>
-                                        </div>
-                                        <ArrowUpRight className="w-5 h-5 text-gray-700 group-hover:text-[#5BC2E7] transition-colors" />
+                            {/* Only Operator Verification is built. The other two are
+                                planned, so they are shown as disabled rather than as
+                                links that go nowhere. */}
+                            <Link href="/admin/operators" className="group">
+                                <div className="p-6 rounded-2xl bg-[#18222e] border border-white/5 group-hover:border-[#5BC2E7]/30 transition-all flex justify-between items-center">
+                                    <div className="space-y-1">
+                                        <p className="text-sm font-black text-white italic uppercase tracking-tight">Operator Verification</p>
+                                        <p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">Clear the approval queue</p>
                                     </div>
-                                </Link>
+                                    <ArrowUpRight className="w-5 h-5 text-gray-700 group-hover:text-[#5BC2E7] transition-colors" />
+                                </div>
+                            </Link>
+
+                            {[
+                                { label: "Dispute Resolution", sub: "Review reported jobs" },
+                                { label: "Platform Settings", sub: "Configuration and defaults" },
+                            ].map((item, i) => (
+                                <div key={i} className="p-6 rounded-2xl bg-[#18222e]/50 border border-white/5 flex justify-between items-center opacity-50 cursor-not-allowed">
+                                    <div className="space-y-1">
+                                        <p className="text-sm font-black text-gray-400 italic uppercase tracking-tight">{item.label}</p>
+                                        <p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">{item.sub}</p>
+                                    </div>
+                                    <span className="text-[9px] font-black uppercase tracking-widest text-gray-600 border border-white/10 rounded-full px-2 py-1">Coming soon</span>
+                                </div>
                             ))}
                         </div>
                     </div>
