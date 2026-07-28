@@ -22,7 +22,7 @@ import { Plane, ShieldCheck, MapPin, Briefcase, Lock, Mail, User, Users, Buildin
 
 const formSchema = z.object({
     name: z.string().min(2, "Real name or call sign is required"),
-    email: z.string().email("Invalid mission-critical email address"),
+    email: z.string().email("Please enter a valid email address"),
     password: z.string().min(6, "Security key must be at least 6 characters"),
     type: z.enum(["INDIVIDUAL", "COMPANY"]),
     companyName: z.string().optional(),

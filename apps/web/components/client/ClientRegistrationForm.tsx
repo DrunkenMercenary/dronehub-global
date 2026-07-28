@@ -18,9 +18,9 @@ import { registerClient } from "@/app/actions/client"
 import { User, Mail, Lock, ShieldCheck, Briefcase } from "lucide-react"
 
 const formSchema = z.object({
-    name: z.string().min(2, "Name or Company must be at least 2 characters"),
-    email: z.string().email("Invalid mission-critical email address"),
-    password: z.string().min(6, "Security key must be at least 6 characters"),
+    name: z.string().min(2, "Name or company must be at least 2 characters"),
+    email: z.string().email("Please enter a valid email address"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
 })
 
 export function ClientRegistrationForm() {
@@ -57,10 +57,10 @@ export function ClientRegistrationForm() {
             <div className="space-y-4 text-center">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#5BC2E7]/10 border border-[#5BC2E7]/20 mx-auto">
                     <ShieldCheck className="w-3.5 h-3.5 text-[#5BC2E7]" />
-                    <span className="text-[10px] font-bold text-[#5BC2E7] uppercase tracking-[0.2em]">Secure Entry</span>
+                    <span className="text-[10px] font-bold text-[#5BC2E7] uppercase tracking-[0.2em]">Create Account</span>
                 </div>
-                <h2 className="text-4xl font-black text-white uppercase italic tracking-tighter">Messageser</h2>
-                <p className="text-gray-500 text-sm font-medium">Register to post contracts and enlist elite drone pilots.</p>
+                <h2 className="text-4xl font-black text-white uppercase italic tracking-tighter">Sign Up</h2>
+                <p className="text-gray-500 text-sm font-medium">Create an account to post jobs and hire drone operators.</p>
             </div>
 
             <Form {...form}>
@@ -98,11 +98,11 @@ export function ClientRegistrationForm() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                        <Mail className="w-3 h-3 text-[#5BC2E7]" /> Direct Frequency
+                                        <Mail className="w-3 h-3 text-[#5BC2E7]" /> Email Address
                                     </FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder="commander@org.com"
+                                            placeholder="you@company.com"
                                             {...field}
                                             className="bg-[#18222e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#5BC2E7]/50 rounded-xl"
                                         />
@@ -118,7 +118,7 @@ export function ClientRegistrationForm() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
-                                        <Lock className="w-3 h-3 text-[#5BC2E7]" /> Security Key
+                                        <Lock className="w-3 h-3 text-[#5BC2E7]" /> Password
                                     </FormLabel>
                                     <FormControl>
                                         <Input
@@ -139,14 +139,14 @@ export function ClientRegistrationForm() {
                         className="w-full bg-[#5BC2E7] hover:bg-[#3aa9d4] text-[#0f1722] font-black uppercase tracking-tighter h-14 text-lg rounded-xl shadow-xl shadow-[#5BC2E7]/10 transition-all active:scale-95 mt-4"
                         disabled={loading}
                     >
-                        {loading ? "Authenticating..." : "Establish Command"}
+                        {loading ? "Creating account..." : "Create Account"}
                     </Button>
                 </form>
             </Form>
 
             <div className="pt-8 text-center">
                 <p className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">
-                    By enlisting, you agree to our standard operating procedures.
+                    By signing up, you agree to our terms of service.
                 </p>
             </div>
         </div>

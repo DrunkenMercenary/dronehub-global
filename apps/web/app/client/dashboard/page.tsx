@@ -90,12 +90,12 @@ export default async function ClientDashboard() {
                                 <Zap className="w-8 h-8 text-gray-800" />
                             </div>
                             <div className="space-y-2">
-                                <h3 className="text-xl font-bold text-gray-400 uppercase italic">No Active Operations Found</h3>
-                                <p className="text-gray-600 max-w-sm mx-auto text-sm font-medium">Initialize your first drone operation to begin enlisting elite pilots.</p>
+                                <h3 className="text-xl font-bold text-gray-400 uppercase italic">No Jobs Yet</h3>
+                                <p className="text-gray-600 max-w-sm mx-auto text-sm font-medium">Post your first job to start hiring drone operators.</p>
                             </div>
                             <Link href="/jobs/new">
                                 <Button variant="outline" className="border-white/10 text-white font-bold hover:bg-[#5BC2E7] hover:text-[#0f1722] transition-all">
-                                    Create Job description
+                                    Post a Job
                                 </Button>
                             </Link>
                         </div>
