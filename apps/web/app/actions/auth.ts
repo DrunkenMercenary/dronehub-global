@@ -31,7 +31,7 @@ export async function registerClient(data: ClientRegisterData) {
         })
 
         if (existingUser) {
-            return { error: "User with this email already exists" }
+            return { error: "You already have an account with this email. Please sign in instead." }
         }
 
         // Hash password

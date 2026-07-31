@@ -40,6 +40,14 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            // Let someone who already registered with an email and password sign
+            // in with Google using that same address, instead of being blocked
+            // with an "OAuthAccountNotLinked" error. NextAuth calls this
+            // "dangerous" because a provider that does not verify email ownership
+            // would allow account takeover. Google does verify ownership, so
+            // linking on a matching Google address is safe here. Do not copy this
+            // setting onto a provider that does not verify emails.
+            allowDangerousEmailAccountLinking: true,
         })
     )
 }

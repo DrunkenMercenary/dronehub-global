@@ -5,6 +5,7 @@ import { useState, useEffect, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { PasswordInput } from "@/components/ui/password-input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
 import { ShieldCheck, Lock, Mail, ArrowRight } from "lucide-react"
@@ -98,11 +99,10 @@ function LoginContent() {
                                     <label htmlFor="password" className="text-gray-300 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
                                         <Lock className="w-3 h-3 text-[#5BC2E7]" /> Password
                                     </label>
-                                    <Input
+                                    <PasswordInput
                                         id="password"
                                         name="password"
-                                        type="password"
-                                        placeholder="••••••••"
+                                        placeholder="Your password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                         required

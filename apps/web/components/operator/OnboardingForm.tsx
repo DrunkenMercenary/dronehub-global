@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { PasswordInput } from "@/components/ui/password-input"
 import { Textarea } from "@/components/ui/textarea"
 import {
     Form,
@@ -238,9 +239,8 @@ export function OnboardingForm() {
                                     <Lock className="w-3 h-3 text-[#5BC2E7]" /> Password
                                 </FormLabel>
                                 <FormControl>
-                                    <Input
-                                        type="password"
-                                        placeholder="••••••••"
+                                    <PasswordInput
+                                        placeholder="At least 6 characters"
                                         {...field}
                                         className="bg-[#18222e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#5BC2E7]/50 rounded-xl"
                                     />

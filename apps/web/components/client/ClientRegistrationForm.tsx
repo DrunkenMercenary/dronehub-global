@@ -6,6 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { PasswordInput } from "@/components/ui/password-input"
+import Link from "next/link"
 import {
     Form,
     FormControl,
@@ -66,8 +68,18 @@ export function ClientRegistrationForm() {
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                     {error && (
-                        <div className="p-4 text-sm font-bold text-red-400 bg-red-400/10 border border-red-400/20 rounded-xl">
-                            {error}
+                        <div className="p-4 text-sm font-bold text-red-400 bg-red-400/10 border border-red-400/20 rounded-xl space-y-2">
+                            <p>{error}</p>
+                            {/* If the problem is that they already have an account,
+                                give them the way out rather than a dead end. */}
+                            {error.toLowerCase().includes("already") && (
+                                <Link
+                                    href={`/login?callbackUrl=/client/dashboard`}
+                                    className="inline-block underline text-[#5BC2E7] hover:text-white transition-colors"
+                                >
+                                    Go to sign in
+                                </Link>
+                            )}
                         </div>
                     )}
 
@@ -121,9 +133,8 @@ export function ClientRegistrationForm() {
                                         <Lock className="w-3 h-3 text-[#5BC2E7]" /> Password
                                     </FormLabel>
                                     <FormControl>
-                                        <Input
-                                            type="password"
-                                            placeholder="••••••••"
+                                        <PasswordInput
+                                            placeholder="At least 6 characters"
                                             {...field}
                                             className="bg-[#18222e] border-white/5 h-12 text-white placeholder:text-gray-600 focus:border-[#5BC2E7]/50 rounded-xl"
                                         />

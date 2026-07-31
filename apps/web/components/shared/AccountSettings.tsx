@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { Input } from "@/components/ui/input"
+import { PasswordInput } from "@/components/ui/password-input"
 import { Button } from "@/components/ui/button"
 import { updateDisplayName, changePassword } from "@/app/actions/account"
 
@@ -57,11 +58,11 @@ export function AccountSettings({ account }: { account: { email: string | null; 
                     <h2 className="text-lg font-bold text-white">Password</h2>
                     <div className="space-y-2">
                         <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Current password</label>
-                        <Input type="password" value={cur} onChange={(e) => setCur(e.target.value)} className="bg-[#0f1722] border-white/5 h-12 text-white rounded-xl" />
+                        <PasswordInput value={cur} onChange={(e) => setCur(e.target.value)} className="bg-[#0f1722] border-white/5 h-12 text-white rounded-xl" />
                     </div>
                     <div className="space-y-2">
                         <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">New password</label>
-                        <Input type="password" value={next} onChange={(e) => setNext(e.target.value)} className="bg-[#0f1722] border-white/5 h-12 text-white rounded-xl" />
+                        <PasswordInput value={next} onChange={(e) => setNext(e.target.value)} className="bg-[#0f1722] border-white/5 h-12 text-white rounded-xl" />
                     </div>
                     {pwMsg && <p className={`text-xs font-bold ${pwMsg.ok ? "text-green-400" : "text-red-400"}`}>{pwMsg.text}</p>}
                     <Button onClick={savePassword} disabled={pwLoading} className="bg-[#FB7427] hover:bg-[#e8651a] text-[#0f1722] font-bold h-11 px-6 rounded-xl">{pwLoading ? "Updating..." : "Update password"}</Button>

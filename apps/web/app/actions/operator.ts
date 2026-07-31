@@ -41,10 +41,10 @@ export async function onboardOperator(data: OperatorFormData) {
 
         if (existingUser) {
             if (existingUser.password) {
-                return { error: "User with this email already exists" }
+                return { error: "You already have an account with this email. Please sign in instead." }
             }
             if (existingUser.operatorProfile) {
-                return { error: "Profile already exists. Please log in." }
+                return { error: "You already have an account with this email. Please sign in instead." }
             }
 
             // Update existing OAuth user

@@ -24,10 +24,10 @@ export async function registerClient(data: z.infer<typeof clientSchema>) {
 
         if (existing) {
             if (existing.password) {
-                return { error: "Email already registered with credentials." }
+                return { error: "You already have an account with this email. Please sign in instead." }
             }
             if (existing.clientProfile) {
-                return { error: "Profile already exists. Please log in." }
+                return { error: "You already have an account with this email. Please sign in instead." }
             }
 
             // Update existing OAuth user
